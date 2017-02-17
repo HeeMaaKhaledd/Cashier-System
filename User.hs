@@ -32,6 +32,7 @@ removeWallet x (User c i wallet spent a)
 --Clears the wallet
 clearWallet :: User -> User
 clearWallet (User c i wallet spent a) = User c i 0 spent a
+
 -- Spent (adds to how much the user has spent.)
 addSpent = undefined
 
