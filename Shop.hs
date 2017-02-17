@@ -8,7 +8,7 @@ type Cart = [Item]
 -- must have loginpromt.
 -----------------------------------------------
 -- create User
---screateUser = undefined
+createUser = undefined
 
 -- remove User
 removeUser = undefined
