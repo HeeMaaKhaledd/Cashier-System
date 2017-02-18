@@ -1,4 +1,4 @@
-module Item(Item,setName,setEan,setPrice,addToStock,removeFromStock,empty) where
+module Item(Item,setName,setEan,setPrice,addToStock,removeFromStock,empty,createItem) where
 
 -- Just to improve readability of the code.
 type Name  = String
@@ -7,6 +7,9 @@ type Price = Int
 type Stock = Int
 
 data Item = Item Name Ean Price Stock deriving Show
+
+-- only to help create item fast.
+createItem a b c d = Item a b c d
 
 -- set the product name
 setName :: Name -> Item -> Item
@@ -19,6 +22,9 @@ setEan x (Item name ean price stock) = Item name x price stock
 --set the product price
 setPrice :: Price -> Item -> Item
 setPrice x (Item name ean price stock) = Item name ean x stock
+
+getPrice :: Item -> Price
+getPrice (Item name ean price stock) = price
 
 --add more items to stock.
 addToStock :: Stock -> Item -> Item
