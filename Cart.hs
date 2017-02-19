@@ -7,7 +7,7 @@ empty :: Cart
 empty = []
 
 addToCart :: Item -> Cart -> Cart
-addToCart x c = x:c
+addToCart x c = undefined
 
 removeFromCart :: Item -> Cart -> Cart
 removeFromCart x c = undefined
