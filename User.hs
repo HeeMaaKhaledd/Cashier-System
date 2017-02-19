@@ -45,13 +45,19 @@ getWallet :: User -> Wallet
 getWallet = undefined
 
 -- Spent (adds to how much the user has spent.)
-addSpent = undefined
+addSpent :: Spent -> User -> User
+addSpent x (User c i wallet spent a)
+  | x > 0 = User c i wallet (spent + x) a
+  | x < 0 = error "The value must be greater than zero"
 
 -- Spent (removes to how much the user has spent.)
-removeSpent = undefined
+removeSpent :: User -> User
+removeSpent (User c i wallet spent a) = User c i wallet 0 a
 
 -- makes user a superuser.
-makeAdmin = undefined
+makeAdmin :: Bool -> User -> User
+makeAdmin True (User c i wallet spent a) = User c i wallet 0 True
 
 -- makes a superuser a normal noob user
-removeAdmin = undefined
+removeAdmin :: Bool -> User -> User
+removeAdmin True (User c i wallet spent a) = User c i wallet 0 False
