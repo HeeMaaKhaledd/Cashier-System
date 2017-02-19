@@ -1,5 +1,7 @@
 -- improving readability of code.
-module User(User,setName,setId,getId,fillWallet,removeWallet,clearWallet,getWallet,addSpent,removeSpent,makeAdmin,removeAdmin) where
+module User(User,setName,setId,getId,fillWallet,
+            removeWallet,clearWallet,getWallet,
+            addSpent,removeSpent,makeAdmin,removeAdmin) where
 
 type Name = String
 type Id = Int
@@ -15,14 +17,14 @@ setName :: Name -> User -> User
 setName x (User c i wallet spent a ) = User x i wallet spent a
 
 getName :: User -> Name
-getName = undefined
+getName (User c i wallet spent a ) = c
 
 -- Set the id of the user
 setId :: Id -> User -> User
 setId x (User c i wallet spent a ) = User c x wallet spent a
 
 getId :: User -> Id
-getId = undefined
+getId (User c i wallet spent a ) = i
 
 -- add to wallet
 fillWallet :: Wallet -> User -> User
@@ -42,7 +44,7 @@ clearWallet :: User -> User
 clearWallet (User c i wallet spent a ) = User c i 0 spent a
 
 getWallet :: User -> Wallet
-getWallet = undefined
+getWallet (User c i wallet spent a ) = wallet
 
 -- Spent (adds to how much the user has spent.)
 addSpent :: Spent -> User -> User
