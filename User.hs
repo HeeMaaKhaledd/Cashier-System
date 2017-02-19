@@ -21,7 +21,7 @@ fillWallet :: Wallet -> User -> User
 fillWallet x (User c i wallet spent a)
   | x > 0 = User c i (wallet + x) spent a
   | otherwise = error "You can't fill with negative currency"
-  
+
 -- removes from wallet.
 removeWallet :: Wallet -> User -> User
 removeWallet x (User c i wallet spent a)
