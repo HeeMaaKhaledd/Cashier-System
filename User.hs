@@ -56,8 +56,8 @@ removeSpent (User c i wallet spent a) = User c i wallet 0 a
 
 -- makes user a superuser.
 makeAdmin :: Bool -> User -> User
-makeAdmin True (User c i wallet spent a) = User c i wallet 0 True
+makeAdmin True (User c i wallet spent a) = User c i wallet spent True
 
 -- makes a superuser a normal noob user
 removeAdmin :: Bool -> User -> User
-removeAdmin True (User c i wallet spent a) = User c i wallet 0 False
+removeAdmin True (User c i wallet spent a) = User c i wallet spent False
