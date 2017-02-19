@@ -1,4 +1,6 @@
 import Item
+import User
+import Cart
 -----------------------------------------------
 -- START OF ADMIN FUNCTIONS
 -----------------------------------------------
@@ -31,10 +33,13 @@ newStock x = undefined
 -----------------------------------------------
 
 -- add item to Cart
-addToCart = undefined
+
+itemToCart :: Item -> Cart -> Cart
+itemToCart i c = addToCart i c
 
 -- remove item from Cart
-removeFromCart = undefined
+delItemFromCart :: Item -> Cart -> Cart
+delItemFromCart i c = removeFromCart i c
 
 -- fetches all item in cart from database and updates stockvalues
 buy x = undefined
