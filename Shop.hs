@@ -1,6 +1,7 @@
 import Item
 import User
 import Cart
+import Test.HUnit
 
 type Name = String
 type Ean = Int

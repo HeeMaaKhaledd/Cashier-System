@@ -1,5 +1,6 @@
 module Item(Item,setName,setEan,setPrice,addToStock,removeFromStock
             ,empty,createItem,getPrice,getName,getStock) where
+import Test.HUnit
 
 -- Just to improve readability of the code.
 type Name  = String
@@ -46,3 +47,22 @@ getStock :: Item -> Stock
 getStock (Item name ean price stock) = stock
 
 empty = Item "" 0 0 0
+
+---------TestCases---------
+runtests = runTestTT $ TestList [test1, test2, test3, test4, test5, test6, test6a,test7]
+
+test1 = TestCase $ assertEqual "setName test ((Item name ean price stock))" (createItem "test" 0 0 0) (setName "test" empty)
+
+test2 = TestCase $ assertEqual "getName (Item name ean price stock)" ("") (getName empty)
+
+test3 = TestCase $ assertEqual "setEan 1001001 ((Item name ean price stock))" (createItem "" 1001001 0 0) (setEan 1001001 empty)
+
+test4 = TestCase $ assertEqual "setPrice 1337 ((Item name ean price stock))" (createItem "" 0 1337 0) (setPrice 1337 empty)
+
+test5 = TestCase $ assertEqual "getPrice ((Item name ean price stock))" (0) (getPrice empty)
+
+test6 = TestCase $ assertEqual "addToStock ((Item name ean price stock))" (createItem "" 0 0 1337) (addToStock 1337 empty )
+
+test6a = TestCase $ assertEqual "removeFromStock ((Item name ean price stock))" (createItem "" 0 0 10) (removeFromStock 10 (createItem "" 0 0 20))
+
+test7 = TestCase $ assertEqual "getStock ((Item name ean price stock))" (20) (getStock (createItem "" 0 0 20) )
