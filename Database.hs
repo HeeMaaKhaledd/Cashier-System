@@ -4,3 +4,7 @@
 --perhaps just use a binary tree?
 --Black and white tree?
 -- Is there any other datatype that is better?
+
+find = undefined
+insert = undefined
+delete = undefined
