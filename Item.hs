@@ -7,7 +7,7 @@ type Ean   = Int
 type Price = Int
 type Stock = Int
 
-data Item = Item Name Ean Price Stock deriving Show
+data Item = Item Name Ean Price Stock deriving (Show, Eq)
 
 -- only to help create item fast.
 createItem a b c d = Item a b c d
