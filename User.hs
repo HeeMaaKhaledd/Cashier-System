@@ -1,7 +1,7 @@
 -- improving readability of code.
 module User(User,setName,setId,getId,fillWallet,
             removeWallet,clearWallet,getWallet,
-            addSpent,removeSpent,makeAdmin,removeAdmin) where
+            addSpent,removeSpent,makeAdmin,removeAdmin,newUser) where
 
 type Name = String
 type Id = Int
@@ -9,7 +9,10 @@ type Wallet = Int
 type Spent = Int
 type IsAdmin = Bool
 
-data User = User Name Id Wallet Spent IsAdmin deriving Show
+data User = User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
+
+newUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> User
+newUser a b c d e = User a b c d e
 
 -- a set of functions that is suitable for a user to have.
 -- Set the name of the user.
@@ -57,9 +60,9 @@ removeSpent :: User -> User
 removeSpent (User c i wallet spent a) = User c i wallet 0 a
 
 -- makes user a superuser.
-makeAdmin :: Bool -> User -> User
-makeAdmin True (User c i wallet spent a) = User c i wallet spent True
+makeAdmin ::User -> User
+makeAdmin (User c i wallet spent a) = User c i wallet spent True
 
 -- makes a superuser a normal noob user
-removeAdmin :: Bool -> User -> User
-removeAdmin True (User c i wallet spent a) = User c i wallet spent False
+removeAdmin ::User -> User
+removeAdmin (User c i wallet spent a) = User c i wallet spent False
