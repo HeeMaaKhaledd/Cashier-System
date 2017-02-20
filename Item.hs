@@ -1,4 +1,4 @@
-module Item(Item,setName,setEan,setPrice,addToStock,removeFromStock,empty,createItem) where
+module Item(Item,setName,setEan,setPrice,addToStock,removeFromStock,empty,createItem,getPrice) where
 
 -- Just to improve readability of the code.
 type Name  = String
