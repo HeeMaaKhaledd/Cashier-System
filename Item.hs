@@ -1,5 +1,5 @@
 module Item(Item,setName,setEan,setPrice,addToStock,removeFromStock
-            ,empty,createItem,getPrice,getId,getName,getStock) where
+            ,empty,createItem,getPrice,getName,getStock) where
 
 -- Just to improve readability of the code.
 type Name  = String
