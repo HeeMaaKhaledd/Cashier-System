@@ -1,6 +1,9 @@
 import Item
 import User
 import Cart
+
+type Name = String
+type Ean = Int
 -----------------------------------------------
 -- START OF ADMIN FUNCTIONS
 -----------------------------------------------
@@ -33,6 +36,10 @@ newStock x = undefined
 -----------------------------------------------
 
 -- add item to Cart
+
+--findItem :: a -> Database -> Item
+
+
 
 itemToCart :: Item -> Cart -> Cart
 itemToCart i c = addToCart i c
