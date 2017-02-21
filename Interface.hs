@@ -12,25 +12,41 @@ type Ean = Int
 -- must be admin.
 -- must have loginpromt.
 -----------------------------------------------
--- create User
-createUser ::
+
+-- ANSVARIG: GRIM
+-- createUser
+-- gets a user and a database, adds this new user to the database and returns the new database.
+createUser :: User -> Database User -> Database User
 createUser = undefined
 
--- remove User
+-- ANSVARIG: GRIM
+-- removeUser
+-- gets a User and a database, removes the user from the database and returns the new database.
 removeUser = undefined
 
--- removes item x from the database
-removeItem x = undefined
+--ANSVARIG: GRIM
+-- removeItem
+-- gets a Item and a Database, removes item from the Database and returns the new Database.
+removeItem :: Item -> Database Item -> Database Item
+removeItem = undefined
 
--- add item x to the database
-addItem x = undefined
+--ANSVARIG: GRIM
+-- addItem
+-- gets a Item and a Database, adds the item to the Database and returns the new Database.
+addItem = undefined
 
--- remove x from i stock value in the database
+--ANSVARIG: JESPER
+-- removeFromStock
+-- gets an amount and a item, and removes x from i's stockvalue
 removeFromStock x i = undefined
 
--- add x to i's stock value in the database
+--ANSVARIG: JESPER
+-- addStock
+-- gets an amount and a item and adds x to i's stockvalue
 addStock x i = undefined
 
+--ANSVARIG: JESPER
+--newStock
 -- replaces i's stock value in the database with x (only to be used if items is recounted)
 newStock x = undefined
 
@@ -52,5 +68,6 @@ delItemFromCart :: Item -> Cart -> Cart
 delItemFromCart i c = removeFromCart i c
 
 getSaldo = undefined
+
 -- fetches all item in cart from database and updates stockvalues
 buy x = undefined
