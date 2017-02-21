@@ -5,14 +5,22 @@
 --Black and white tree?
 -- Is there any other datatype that is better?
 
-type Database a = [a]
+type Id = Int
 
-delete a [] = error "not in list"
-delete a xs = deleteAUX a xs []
-  where deleteAUX a (x:xs) n
-          | a == x = n ++ xs
-          | otherwise = deleteAUX a xs (n++x)
+type Database a = [(a,Id)]
 
-insert a xs = a:xs
+deleteWithID :: Id -> Database a -> Database a
+deleteWithID i [] = error "not in Database"
+deleteWithID i xs = deleteWithIDAUX i xs []
+  where deleteWithIDAUX j (y:ys) n
+          | j == (snd y) = n ++ ys
+          | otherwise = deleteWithIDAUX j ys (n++[y])
 
-find a xs = undefined
+insert :: a -> Id -> Database a -> Database a
+insert a i xs = (a,i):xs
+
+grabWithID :: Id -> Database a -> a
+grabWithID i [] = error "not in our database"
+grabWithID i xs
+  | i == (snd y) = fst y
+  | otherwise grabWithIDAUX i ys

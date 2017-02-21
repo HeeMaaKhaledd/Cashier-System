@@ -49,5 +49,6 @@ itemToCart i c = addToCart i c
 delItemFromCart :: Item -> Cart -> Cart
 delItemFromCart i c = removeFromCart i c
 
+getSaldo = undefined
 -- fetches all item in cart from database and updates stockvalues
 buy x = undefined
