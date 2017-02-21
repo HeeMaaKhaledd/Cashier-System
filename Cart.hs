@@ -16,7 +16,7 @@ removeFromCart i c = removeFromCartAUX i c Cart.empty
 removeFromCartAUX :: Item -> Cart -> Cart -> Cart
 removeFromCartAUX i (c:cs) newC
   | i == c = newC ++ cs
-  | i /= c = removeFromCartAUX i cs (c:newC) 
+  | i /= c = removeFromCartAUX i cs (c:newC)
 
 calculatePrice :: Cart -> Int
 calculatePrice [] = 0
