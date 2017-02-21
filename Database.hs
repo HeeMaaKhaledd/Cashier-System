@@ -4,8 +4,9 @@
 --perhaps just use a binary tree?
 --Black and white tree?
 -- Is there any other datatype that is better?
+module Item(Database,deleteWithID,insert,grabWithID) where
 
-type Id = Int
+type Id = Int -- eanCode for item, userId for users...
 
 type Database a = [(a,Id)]
 

@@ -1,6 +1,7 @@
 import Item
 import User
 import Cart
+import Database
 import Test.HUnit
 
 type Name = String
@@ -12,6 +13,7 @@ type Ean = Int
 -- must have loginpromt.
 -----------------------------------------------
 -- create User
+createUser ::
 createUser = undefined
 
 -- remove User
