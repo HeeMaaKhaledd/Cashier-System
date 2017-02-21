@@ -29,8 +29,7 @@ addToStock      :: Stock  -> Item -> Item
 removeFromStock :: Stock  -> Item -> Item
 getStock        :: Item   -> Stock
 ```
-So in the structure of the function specifications for the functions above. You can see a bunch of types with an arrow pointing right.  
-The last arrow indicates what the function returns and the other arrows is just seperating arguments the function takes while being called!  
+So in the structure of the function specifications for the functions above. You can see a bunch of types with an arrow pointing right. The last arrow indicates what the function returns and the other arrows is just seperating arguments the function takes while being called!  
 
 A Example would be setName "Coca-Cola" (Item "cola" 1234 10 0) -> (Item "Cola-Cola" 1234 10 0)
 Here you can see that setName is being called with two arguments, first a Name and secondly a Item and with these two arguments it returns a new Item.
