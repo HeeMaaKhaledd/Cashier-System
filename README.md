@@ -11,11 +11,11 @@ type Stock = Int
 
 data Item = Item Name Ean Price Stock
 ```
-this means that every item has the following "variables"...
+this means that every item has the following Arguments...  
 Name, simply the name in the form of a string.
 Ean, the barcode that is on the item itself.
 Price, the price we want to take for the item.
-Stock, the amount of items we have in storage.
+Stock, the amount of items we have in storage. 
 
 ## Description of User
 ## Description of Interface
