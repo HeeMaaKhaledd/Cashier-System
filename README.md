@@ -4,6 +4,11 @@ A Haskell based Cashier-System
 Item is the way we chose to represent a product of in the Cashier-System.
 Our Item.hs has its own datastructure which is defined in the following way.
 ```Haskell
+type Name  = String
+type Ean   = Int
+type Price = Int
+type Stock = Int
+
 data Item = Item Name Ean Price Stock
 ```
 this means that every item has the following "variables"...
