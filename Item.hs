@@ -1,5 +1,5 @@
 module Item(Item,setName,setEan,setPrice,addToStock,removeFromStock
-            ,empty,createItem,getPrice,getName,getStock) where
+            ,empty,createItem,getPrice,getName,getStock,getEan) where
 import Test.HUnit
 
 -- Just to improve readability of the code.
@@ -23,6 +23,9 @@ getName (Item name ean price stock) = name
 -- set the product ean-code
 setEan :: Ean -> Item -> Item
 setEan x (Item name ean price stock) = Item name x price stock
+
+getEan :: Item -> Ean
+getEan (Item name ean price stock) = ean
 
 --set the product price
 setPrice :: Price -> Item -> Item

@@ -11,11 +11,24 @@ type Stock = Int
 
 data Item = Item Name Ean Price Stock
 ```
-this means that every item has the following Arguments...  
+This means that every item has the following Arguments...  
 Name, simply the name in the form of a string.  
 Ean, the barcode that is on the item itself.  
 Price, the price we want to take for the item.  
 Stock, the amount of items we have in storage.  
+
+The following functions is reachable if Item.hs is imported.  
+```Haskell
+setName         :: Name -> Item -> Item
+getName         :: Item -> Name
+setEan          :: Ean -> Item -> Item
+getEan          :: Item -> Ean
+setPrice        :: Price -> Item -> Item
+getPrice        :: Item -> Price
+addToStock      :: Stock -> Item -> Item
+removeFromStock :: Stock -> Item -> Item
+getStock        :: Item -> Stock
+```
 
 ## Description of User
 ## Description of Interface
