@@ -27,7 +27,6 @@ removeUser = undefined
 --ANSVARIG: GRIM
 -- removeItem
 -- gets a Item and a Database, removes item from the Database and returns the new Database.
-removeItem :: Item -> Database Item -> Database Item
 removeItem = undefined
 
 --ANSVARIG: GRIM
