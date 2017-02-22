@@ -49,6 +49,7 @@ removeFromStock x (Item name ean price stock)
 getStock :: Item -> Stock
 getStock (Item name ean price stock) = stock
 
+empty :: Item
 empty = Item "" 0 0 0
 
 ---------TestCases---------
