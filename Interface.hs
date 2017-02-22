@@ -5,7 +5,8 @@ import Database
 import Test.HUnit
 
 type Name = String
-type Ean = Int
+type Ean  = Int
+type Id   = Int
 -----------------------------------------------
 -- START OF ADMIN FUNCTIONS
 -----------------------------------------------
@@ -23,6 +24,9 @@ createUser = undefined
 -- removeUser
 -- gets a User and a database, removes the user from the database and returns the new database.
 removeUser = undefined
+
+findUser :: Id -> Database User -> User
+findUser = undefined
 
 --ANSVARIG: GRIM
 -- removeItem
@@ -52,8 +56,8 @@ newStock x = undefined
 -----------------------------------------------
 -- END OF ADMIN FUNCTIONS
 -----------------------------------------------
-
---findItem :: a -> Database -> Item
+findItem :: Ean -> Database Item -> Item
+findItem = undefined
 
 
 
