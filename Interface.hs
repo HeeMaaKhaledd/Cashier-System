@@ -37,7 +37,8 @@ addItem = undefined
 --ANSVARIG: JESPER
 -- removeFromStock
 -- gets an amount and a item, and removes x from i's stockvalue
-removeFromStock x i = undefined
+removeFromStock :: Int -> Item -> Item
+removeFromStock x i = Item.removeFromStock x i 
 
 --ANSVARIG: JESPER
 -- addStock
