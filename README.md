@@ -87,5 +87,15 @@ type Database a = [(a,Id)]
 As you can see our datatype for Database is polymorphic and therefore can hold both users or items as we wish!
 So this means that the Database takes one polymorphic argument and returns a tuple containing this argument together with a ID.
 
+The following functions is reachable if Database.hs is imported
+```Haskell
+empty :: Database a
+deleteWithID :: Id -> Database a -> Database a
+insert :: a -> Id -> Database a -> Database a
+grabWithID :: Id -> Database a -> a
+```
+So in the structure of the function specifications for the functions above. You can see a bunch of types with an arrow pointing right. The last arrow indicates what the function returns and the other arrows is just separating arguments the function takes while being called!  
+
+If you want examples, read the example for Item.hs... Same principle!
 
 ## Description of Interface
