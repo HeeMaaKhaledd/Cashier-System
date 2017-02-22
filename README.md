@@ -1,7 +1,7 @@
 # Cashier-System
 A Haskell based Cashier-System
 ## Description of Item
-Item is the way we chose to represent a product of in the Cashier-System.
+Item.hs is the way we chose to represent a product of in the Cashier-System.
 Our Item.hs has its own datastructure which is defined in the following way.
 ```Haskell
 type Name  = String
@@ -36,7 +36,7 @@ A Example would be setName "Coca-Cola" (Item "cola" 1234 10 0) -> (Item "Cola-Co
 Here you can see that setName is being called with two arguments, first a Name and secondly a Item and with these two arguments it returns a new Item.
 
 ## Description of User
-User is the way we chose to represent a User of in the Cashier-System.
+User.hs is the way we chose to represent a User of in the Cashier-System.
 Our User.hs has its own datastructure which is defined in the following way.
 ```Haskell
 type Name = String
@@ -74,7 +74,18 @@ clearWallet   :: User   -> User
 
 So in the structure of the function specifications for the functions above. You can see a bunch of types with an arrow pointing right. The last arrow indicates what the function returns and the other arrows is just separating arguments the function takes while being called!  
 
+If you want examples, read the example for Item.hs... Same principle!
+
+## Description of Database
+Database.hs is the way we choose to represent a Database in our Cashier-System.
+Our Database.hs has its own datatypes which is defined the following way!
+```Haskell
+type Id = Int -- Ean for item, userId for users...
+
+type Database a = [(a,Id)]
+```
+As you can see our datatype for Database is polymorphic and therefore can hold both users or items as we wish!
+So this means that the Database takes one polymorphic argument and returns a tuple containing this argument together with a ID.
 
 
 ## Description of Interface
-## Description of Database
