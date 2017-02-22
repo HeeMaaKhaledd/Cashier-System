@@ -7,6 +7,7 @@ import Test.HUnit
 type Name = String
 type Ean  = Int
 type Id   = Int
+type Wallet = Int
 -----------------------------------------------
 -- START OF ADMIN FUNCTIONS
 -----------------------------------------------
@@ -42,25 +43,26 @@ addItem = undefined
 --ANSVARIG: JESPER
 -- removeFromStock
 -- gets an amount and a item, and removes x from i's stockvalue
-removeFromStock x i = undefined
+removeFromStock :: Int -> Item -> Item
+removeFromStock x i = Item.removeFromStock x i
 
 --ANSVARIG: JESPER
 -- addStock
 -- gets an amount and a item and adds x to i's stockvalue
-addStock x i = undefined
+addToStock :: Int -> Item -> Item
+addToStock x i = Item.addToStock x i
 
 --ANSVARIG: JESPER
---newStock
+--replaceStock
 -- replaces i's stock value in the database with x (only to be used if items is recounted)
-newStock x = undefined
+replaceStock :: Int -> Item -> Item
+replaceStock x = Item.replaceStock x
 
 -----------------------------------------------
 -- END OF ADMIN FUNCTIONS
 -----------------------------------------------
 findItem :: Ean -> Database Item -> Item
 findItem = undefined
-
-
 
 itemToCart :: Item -> Cart -> Cart
 itemToCart i c = addToCart i c
@@ -69,7 +71,8 @@ itemToCart i c = addToCart i c
 delItemFromCart :: Item -> Cart -> Cart
 delItemFromCart i c = removeFromCart i c
 
-getSaldo = undefined
+getSaldo :: User -> Wallet
+getSaldo u = User.getWallet u
 
 -- fetches all item in cart from database and updates stockvalues
 buy x = undefined
