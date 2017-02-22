@@ -53,8 +53,6 @@ newStock x = undefined
 -- END OF ADMIN FUNCTIONS
 -----------------------------------------------
 
--- add item to Cart
-
 --findItem :: a -> Database -> Item
 
 
