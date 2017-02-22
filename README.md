@@ -30,7 +30,7 @@ addToStock      :: Stock  -> Item -> Item
 removeFromStock :: Stock  -> Item -> Item
 getStock        :: Item   -> Stock
 ```
-So in the structure of the function specifications for the functions above. You can see a bunch of types with an arrow pointing right. The last arrow indicates what the function returns and the other arrows is just seperating arguments the function takes while being called!  
+So in the structure of the function specifications for the functions above. You can see a bunch of types with an arrow pointing right. The last arrow indicates what the function returns and the other arrows is just separating arguments the function takes while being called!  
 
 A Example would be setName "Coca-Cola" (Item "cola" 1234 10 0) -> (Item "Cola-Cola" 1234 10 0)  
 Here you can see that setName is being called with two arguments, first a Name and secondly a Item and with these two arguments it returns a new Item.
@@ -53,6 +53,27 @@ Id, a specific id to identify a user.
 Wallet, the amount of money a user have saved.  
 Spent, the amount of money a user have spent in our shop.  
 IsAdmin, keeps tracks the user itself have admin properties or not.
+
+The following functions is reachable if User.hs is imported
+
+```Haskell
+newUser       :: Name   -> Id   -> Wallet -> Spent -> IsAdmin -> User
+setName       :: Name   -> User -> User
+getName       :: User   -> Name
+setId         :: Id     -> User -> User
+getId         :: User   -> Id
+fillWallet    :: Wallet -> User -> User
+removeWallet  :: Wallet -> User -> User
+removeSpent   :: User   -> User
+makeAdmin     :: User   -> User
+removeAdmin   :: User   -> User
+addSpent      :: Spent  -> User -> User
+getWallet     :: User   -> Wallet
+clearWallet   :: User   -> User
+```
+
+So in the structure of the function specifications for the functions above. You can see a bunch of types with an arrow pointing right. The last arrow indicates what the function returns and the other arrows is just separating arguments the function takes while being called!  
+
 
 
 ## Description of Interface
