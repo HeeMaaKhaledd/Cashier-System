@@ -7,6 +7,7 @@ import Test.HUnit
 type Name = String
 type Ean  = Int
 type Id   = Int
+type Wallet = Int
 -----------------------------------------------
 -- START OF ADMIN FUNCTIONS
 -----------------------------------------------
@@ -59,8 +60,6 @@ newStock x = undefined
 findItem :: Ean -> Database Item -> Item
 findItem = undefined
 
-
-
 itemToCart :: Item -> Cart -> Cart
 itemToCart i c = addToCart i c
 
@@ -68,7 +67,8 @@ itemToCart i c = addToCart i c
 delItemFromCart :: Item -> Cart -> Cart
 delItemFromCart i c = removeFromCart i c
 
-getSaldo = undefined
+getSaldo :: User -> Wallet
+getSaldo u = User.getWallet u
 
 -- fetches all item in cart from database and updates stockvalues
 buy x = undefined
