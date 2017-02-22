@@ -18,15 +18,16 @@ type Id   = Int
 -- createUser
 -- gets a user and a database, adds this new user to the database and returns the new database.
 createUser :: User -> Database User -> Database User
-createUser u dB = (Database.insert u (User.getId u)) ++ db
+createUser u dB = (Database.insert u (User.getId u)) dB
 
 -- ANSVARIG: GRIM
 -- removeUser
 -- gets a User and a database, removes the user from the database and returns the new database.
-removeUser = undefined
+removeUser :: User -> Database User -> Database User
+removeUser u dB = (Database.delete u) dB
 
 findUser :: Id -> Database User -> User
-findUser = undefined
+findUser u dB = undefined
 
 --ANSVARIG: GRIM
 -- removeItem
