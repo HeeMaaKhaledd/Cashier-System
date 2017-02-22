@@ -1,5 +1,5 @@
 module Item(Item,setName,setEan,setPrice,addToStock,removeFromStock
-            ,empty,createItem,getPrice,getName,getStock,getEan) where
+            ,empty,createItem,getPrice,getName,getStock,getEan,replaceStock) where
 import Test.HUnit
 
 -- Just to improve readability of the code.
@@ -45,6 +45,9 @@ removeFromStock x (Item name ean price stock)
   | x > 0 && x < stock = Item name ean price (stock - x)
   | x > stock = error "You can't remove more items than we have in stock."
   | otherwise = error "You can't remove a negative number."
+
+replaceStock :: Stock -> Item -> Item
+replaceStock x (Item name ean price stock) = (Item name ean price x)
 
 getStock :: Item -> Stock
 getStock (Item name ean price stock) = stock
