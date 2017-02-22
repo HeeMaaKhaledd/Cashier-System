@@ -9,7 +9,7 @@ type Ean   = Int
 type Price = Int
 type Stock = Int
 
-data Item = Item Name Ean Price Stock
+data Item = Item Name Ean Price Stock deriving (Show,Eq)
 ```
 This means that every item has the following Arguments...  
 Name, simply the name in the form of a string.  
@@ -36,5 +36,24 @@ A Example would be setName "Coca-Cola" (Item "cola" 1234 10 0) -> (Item "Cola-Co
 Here you can see that setName is being called with two arguments, first a Name and secondly a Item and with these two arguments it returns a new Item.
 
 ## Description of User
+User is the way we chose to represent a User of in the Cashier-System.
+Our User.hs has its own datastructure which is defined in the following way.
+```Haskell
+type Name = String
+type Id = Int
+type Wallet = Int
+type Spent = Int
+type IsAdmin = Bool
+
+data User = User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
+```
+This means that every User has the following Arguments...  
+Name, simply the name in the form of a string.  
+Id, a specific id to identify a user.
+Wallet, the amount of money a user have saved.  
+Spent, the amount of money a user have spent in our shop.  
+IsAdmin, keeps tracks the user itself have admin properties or not.
+
+
 ## Description of Interface
 ## Description of Database
