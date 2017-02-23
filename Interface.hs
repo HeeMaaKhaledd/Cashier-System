@@ -50,17 +50,57 @@ setUserName name user (Interface u dU dI c)
       j = User.setName name user
       k = User.getId user
 
+setUserId iD user (Interface u dU dI c)
+  | user == u = Interface j newdb dI c
+  | otherwise = Interface u newdb dI c
+    where
+      newdb = Database.insert j k (Database.delete user dU)
+      j = User.setId iD user
+      k = User.getId user
 
-setUserId       = undefined
-makeUserAdmin   = undefined
-removeUserAdmin = undefined
+makeUserAdmin user (Interface u dU dI c)
+  | user == u = Interface j newdb dI c
+  | otherwise = Interface u newdb dI c
+    where
+      newdb = Database.insert j k (Database.delete user dU)
+      j = User.makeAdmin user
+      k = User.getId user
+
+removeUserAdmin user (Interface u dU dI c)
+  | user == u = Interface j newdb dI c
+  | otherwise = Interface u newdb dI c
+    where
+      newdb = Database.insert j k (Database.delete user dU)
+      j = User.removeAdmin user
+      k = User.getId user
 
 -- wallet
-getWallet    = undefined
-fillWallet   = undefined
-reduceWallet = undefined
-clearWallet  = undefined
+getWallet user (Interface u dU dI c) = User.getWallet user
 
+fillWallet amount user (Interface u dU dI c)
+  | user == u = Interface j newdb dI c
+  | otherwise = Interface u newdb dI c
+    where
+      newdb = Database.insert j k (Database.delete user dU)
+      j = User.fillWallet amount user
+      k = User.getId user
+
+
+reduceWallet amount user (Interface u dU dI c)
+  | user == u = Interface j newdb dI c
+  | otherwise = Interface u newdb dI c
+    where
+      newdb = Database.insert j k (Database.delete user dU)
+      j = User.removeWallet amount user
+      k = User.getId user
+
+clearWallet amount user (Interface u dU dI c)
+  | user == u = Interface j newdb dI c
+  | otherwise = Interface u newdb dI c
+    where
+      newdb = Database.insert j k (Database.delete user dU)
+      j = User.clearWallet user
+      k = User.getId user
 
 -- item handling
 
