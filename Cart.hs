@@ -1,5 +1,6 @@
-module Cart(Cart,Cart.empty,addToCart,removeFromCart,calculatePrice) where
+module Cart(Cart,Cart.empty,addToCart,removeFromCart,calculatePrice,getFirst) where
 import Item
+import Database
 
 type Cart = [Item]
 
@@ -21,3 +22,5 @@ removeFromCartAUX i (c:cs) newC
 calculatePrice :: Cart -> Int
 calculatePrice [] = 0
 calculatePrice (c:cs) = getPrice c + calculatePrice cs
+
+getFirst (c:cs) = (c,cs)

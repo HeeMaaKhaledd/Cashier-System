@@ -138,6 +138,17 @@ addToCart item (Interface u dU dI c) = Interface u dU dI (Cart.addToCart item c)
 
 removeFromCart2 item (Interface u dU dI c) = Interface u dU dI (Cart.removeFromCart item c)
 
+buy2 (Interface u dU dI c)
+  | c == Cart.empty = Interface u dU dI c
+  | otherwise = buy2 (Interface newu newdU newdI newC)
+  where
+    newdU = Database.insert newu (User.getId newu) (Database.delete u dU)
+    newdI = Database.insert newi (Item.getEan newi) (Database.delete (fst nC) dI)
+    newi  = Item.removeFromStock 1 (fst nC)
+    newC  = (snd nC)
+    newu  = User.removeWallet price (User.addSpent price u)
+    price = Item.getPrice (fst nC)
+    nC    = Cart.getFirst c
 
 -- ANSVARIG: GRIM
 -- createUser
