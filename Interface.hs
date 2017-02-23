@@ -19,7 +19,7 @@ type Wallet = Int
 -- createUser
 -- gets a user and a database, adds this new user to the database and returns the new database.
 createUser :: User -> Database User -> Database User
-createUser u dB = (Database.insert u (User.getId u)) dB
+createUser u dB = Database.insert u (User.getId u) dB
 
 -- ANSVARIG: GRIM
 -- removeUser
