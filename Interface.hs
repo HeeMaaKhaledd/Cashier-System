@@ -31,6 +31,74 @@ getCart (Interface u dU dI c) = c
 -- must have loginpromt.
 -----------------------------------------------
 
+-- user handling
+
+createUser2 name iD wallet spent admin (Interface u dU dI c) = Interface u newdb dI c
+  where newdb = Database.insert (User.newUser name iD wallet spent admin) iD dU
+
+removeUser2 user (Interface u dU dI c) = Interface u newdb dI c
+  where newdb = Database.delete user dU
+
+findUser2 iD (Interface u dU dI c) = Database.grabWithId iD dU
+
+-- uppdate user
+setUserName name user (Interface u dU dI c)
+  | user == u = Interface j newdb dI c
+  | otherwise = Interface u newdb dI c
+    where
+      newdb = Database.insert j k (Database.delete user dU)
+      j = User.setName name user
+      k = User.getId user
+
+
+setUserId       = undefined
+makeUserAdmin   = undefined
+removeUserAdmin = undefined
+
+-- wallet
+getWallet    = undefined
+fillWallet   = undefined
+reduceWallet = undefined
+clearWallet  = undefined
+
+
+-- item handling
+
+createItem name ean price stock (Interface u dU dI c) = Interface u dU newdb c
+  where newdb = Database.insert (Item.createItem name ean price stock) ean dI
+
+removeItem2 i (Interface u dU dI c) = Interface u dU newdb c
+  where newdb = Database.delete i dI
+
+findItem2 ean (Interface u dU dI c) = Database.grabWithId ean dI
+
+-- stock handling
+
+addToStock2 i item (Interface u dU dI c) = Interface u dU newdb c
+  where
+    newdb = Database.insert j k (Database.delete item dI)
+    j = Item.addToStock i item
+    k = Item.getEan item
+
+removeFromStock2 i item (Interface u dU dI c) = Interface u dU newdb c
+  where
+    newdb = Database.insert j k (Database.delete item dI)
+    j = Item.removeFromStock i item
+    k = Item.getEan item
+
+replaceStock2 i item (Interface u dU dI c) = Interface u dU newdb c
+  where
+    newdb = Database.insert j k (Database.delete item dI)
+    j = Item.replaceStock i item
+    k = Item.getEan item
+
+-- Cart Handling
+
+addToCart item (Interface u dU dI c) = Interface u dU dI (Cart.addToCart item c)
+
+removeFromCart2 item (Interface u dU dI c) = Interface u dU dI (Cart.removeFromCart item c)
+
+
 -- ANSVARIG: GRIM
 -- createUser
 -- gets a user and a database, adds this new user to the database and returns the new database.
@@ -84,7 +152,7 @@ findItem :: Ean -> Database Item -> Item
 findItem a b = Database.grabWithId a b
 
 itemToCart :: Item -> Cart -> Cart
-itemToCart i c = addToCart i c
+itemToCart i c = Cart.addToCart i c
 
 -- remove item from Cart
 removeFromCart :: Item -> Cart -> Cart
