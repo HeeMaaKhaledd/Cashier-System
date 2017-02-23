@@ -4,8 +4,10 @@ import Cart
 import Database
 import Test.HUnit
 
-type Name = String
-type Ean  = Int
+type Name  = String
+type Ean   = Int
+type Price = Int
+type Stock = Int
 type Id   = Int
 type Wallet = Int
 -----------------------------------------------
@@ -28,17 +30,21 @@ removeUser :: User -> Database User -> Database User
 removeUser u dB = (Database.delete u) dB
 
 findUser :: Id -> Database User -> User
-findUser u dB = undefined
+findUser i dB = Database.grabWithId i dB
+
 
 --ANSVARIG: GRIM
 -- removeItem
 -- gets a Item and a Database, removes item from the Database and returns the new Database.
-removeItem = undefined
+removeItem :: Id -> Database Item -> Database Item
+removeItem i dB = Database.deleteWithID i dB
 
 --ANSVARIG: GRIM
 -- addItem
 -- gets a Item and a Database, adds the item to the Database and returns the new Database.
-addItem = undefined
+
+addItem :: Name -> Ean -> Price -> Stock -> Database Item -> Database Item
+addItem a b c d dB = Database.insert (Item.createItem a b c d) b dB
 
 --ANSVARIG: JESPER
 -- removeFromStock
