@@ -4,10 +4,24 @@ import Cart
 import Database
 import Test.HUnit
 
+-- END OF IMPORT
+
 type Name = String
 type Ean  = Int
 type Id   = Int
 type Wallet = Int
+
+data Interface = Interface User (Database User) (Database Item) Cart deriving (Show,Eq)
+
+-- END OF DATASTRUCTURES
+
+-- Functions to grab information from our Interface datastructure!
+newInterface a b c d = Interface a b c d
+getUser (Interface u dU dI c) = u
+getDu (Interface u dU dI c)   = dU
+getDi (Interface u dU dI c)   = dI
+getCart (Interface u dU dI c) = c
+
 -----------------------------------------------
 -- START OF ADMIN FUNCTIONS
 -----------------------------------------------
@@ -38,7 +52,7 @@ removeItem = undefined
 --ANSVARIG: GRIM
 -- addItem
 -- gets a Item and a Database, adds the item to the Database and returns the new Database.
-addItem = undefined
+addItem a b c d db = Database.insert(Item.createItem a b c d) b db
 
 --ANSVARIG: JESPER
 -- removeFromStock
@@ -62,7 +76,7 @@ replaceStock x = Item.replaceStock x
 -- END OF ADMIN FUNCTIONS
 -----------------------------------------------
 findItem :: Ean -> Database Item -> Item
-findItem = undefined
+findItem a b = Database.grabWithId a b
 
 itemToCart :: Item -> Cart -> Cart
 itemToCart i c = addToCart i c
@@ -75,4 +89,5 @@ getSaldo :: User -> Wallet
 getSaldo u = User.getWallet u
 
 -- fetches all item in cart from database and updates stockvalues
-buy x = undefined
+buy :: User -> Cart -> Database User -> Database Item ->(Database User, Database Item)
+buy u c dU dI = undefined
