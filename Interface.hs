@@ -68,8 +68,8 @@ itemToCart :: Item -> Cart -> Cart
 itemToCart i c = addToCart i c
 
 -- remove item from Cart
-delItemFromCart :: Item -> Cart -> Cart
-delItemFromCart i c = removeFromCart i c
+removeFromCart :: Item -> Cart -> Cart
+removeFromCart i c = Cart.removeFromCart i c
 
 getSaldo :: User -> Wallet
 getSaldo u = User.getWallet u
