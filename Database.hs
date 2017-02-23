@@ -30,6 +30,12 @@ delete a xs = deleteAUX a xs []
 insert :: a -> Id -> Database a -> Database a
 insert a i xs = (a,i):xs
 
+grab :: Eq a => a -> Database a -> a
+grab a [] = error "not in Database"
+grab a (x:xs)
+  | a == (fst x) = fst x
+  | otherwise = grab a xs
+
 grabWithId :: Id -> Database a -> a
 grabWithId i [] = error "not in our database"
 grabWithId i (x:xs)
