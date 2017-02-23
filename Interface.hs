@@ -12,6 +12,7 @@ type Price = Int
 type Stock = Int
 type Id   = Int
 type Wallet = Int
+type IsAdmin = Bool
 
 data Interface = Interface User (Database User) (Database Item) Cart deriving (Show,Eq)
 
@@ -28,30 +29,28 @@ bajs = newInterface a b c d
 -- END OF DATASTRUCTURES
 
 -- Functions to grab information from our Interface datastructure!
+newInterface :: User -> Database User -> Database Item -> Cart -> Interface
 newInterface a b c d = Interface a b c d
-getUser (Interface u dU dI c) = u
-getDu (Interface u dU dI c)   = dU
-getDi (Interface u dU dI c)   = dI
-getCart (Interface u dU dI c) = c
 
------------------------------------------------
--- START OF ADMIN FUNCTIONS
------------------------------------------------
--- must be admin.
--- must have loginpromt.
------------------------------------------------
+getUser :: Interface -> User
+getUser (Interface u dU dI c) = u
 
 -- user handling
 
-createUser2 name iD wallet spent admin (Interface u dU dI c) = Interface u newdb dI c
+createUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> Interface -> Interface
+createUser name iD wallet spent admin (Interface u dU dI c) = Interface u newdb dI c
   where newdb = Database.insert (User.newUser name iD wallet spent admin) iD dU
 
-removeUser2 user (Interface u dU dI c) = Interface u newdb dI c
+removeUser :: User -> Interface -> Interface
+removeUser user (Interface u dU dI c) = Interface u newdb dI c
   where newdb = Database.delete user dU
 
-findUser2 iD (Interface u dU dI c) = Database.grabWithId iD dU
+findUser :: Id -> Interface -> User
+findUser iD (Interface u dU dI c) = Database.grabWithId iD dU
 
 -- uppdate user
+
+setUserName :: Name -> User -> Interface -> Interface
 setUserName name user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
@@ -60,6 +59,7 @@ setUserName name user (Interface u dU dI c)
       j = User.setName name user
       k = User.getId user
 
+setUserId :: Id -> User -> Interface -> Interface
 setUserId iD user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
@@ -68,6 +68,7 @@ setUserId iD user (Interface u dU dI c)
       j = User.setId iD user
       k = User.getId user
 
+makeUserAdmin:: User -> Interface -> Interface
 makeUserAdmin user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
@@ -76,6 +77,7 @@ makeUserAdmin user (Interface u dU dI c)
       j = User.makeAdmin user
       k = User.getId user
 
+removeUserAdmin:: User -> Interface -> Interface
 removeUserAdmin user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
@@ -85,8 +87,10 @@ removeUserAdmin user (Interface u dU dI c)
       k = User.getId user
 
 -- wallet
+getWallet :: User -> Interface -> Wallet
 getWallet user (Interface u dU dI c) = User.getWallet user
 
+fillWallet :: Int -> User -> Interface -> Interface
 fillWallet amount user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
@@ -95,7 +99,7 @@ fillWallet amount user (Interface u dU dI c)
       j = User.fillWallet amount user
       k = User.getId user
 
-
+reduceWallet :: Int -> User -> Interface -> Interface
 reduceWallet amount user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
@@ -104,6 +108,7 @@ reduceWallet amount user (Interface u dU dI c)
       j = User.removeWallet amount user
       k = User.getId user
 
+clearWallet :: Int -> User -> Interface -> Interface
 clearWallet amount user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
@@ -114,29 +119,34 @@ clearWallet amount user (Interface u dU dI c)
 
 -- item handling
 
+createItem :: Name -> Ean -> Price -> Stock -> Interface -> Interface
 createItem name ean price stock (Interface u dU dI c) = Interface u dU newdb c
   where newdb = Database.insert (Item.createItem name ean price stock) ean dI
 
-removeItem2 i (Interface u dU dI c) = Interface u dU newdb c
+removeItem :: Item -> Interface -> Interface
+removeItem i (Interface u dU dI c) = Interface u dU newdb c
   where newdb = Database.delete i dI
 
-findItem2 ean (Interface u dU dI c) = Database.grabWithId ean dI
+findItem :: Ean -> Interface -> Item
+findItem ean (Interface u dU dI c) = Database.grabWithId ean dI
 
 -- stock handling
-
-addToStock2 i item (Interface u dU dI c) = Interface u dU newdb c
+addToStock :: Int -> Item -> Interface -> Interface
+addToStock i item (Interface u dU dI c) = Interface u dU newdb c
   where
     newdb = Database.insert j k (Database.delete item dI)
     j = Item.addToStock i item
     k = Item.getEan item
 
-removeFromStock2 i item (Interface u dU dI c) = Interface u dU newdb c
+removeFromStock :: Int -> Item -> Interface -> Interface
+removeFromStock i item (Interface u dU dI c) = Interface u dU newdb c
   where
     newdb = Database.insert j k (Database.delete item dI)
     j = Item.removeFromStock i item
     k = Item.getEan item
 
-replaceStock2 i item (Interface u dU dI c) = Interface u dU newdb c
+replaceStock :: Int -> Item -> Interface -> Interface
+replaceStock i item (Interface u dU dI c) = Interface u dU newdb c
   where
     newdb = Database.insert j k (Database.delete item dI)
     j = Item.replaceStock i item
@@ -144,13 +154,16 @@ replaceStock2 i item (Interface u dU dI c) = Interface u dU newdb c
 
 -- Cart Handling
 
+addToCart :: Item -> Interface -> Interface
 addToCart item (Interface u dU dI c) = Interface u dU dI (Cart.addToCart item c)
 
-removeFromCart2 item (Interface u dU dI c) = Interface u dU dI (Cart.removeFromCart item c)
+removeFromCart :: Item -> Interface -> Interface
+removeFromCart item (Interface u dU dI c) = Interface u dU dI (Cart.removeFromCart item c)
 
-buy2 (Interface u dU dI c)
+buy :: Interface -> Interface
+buy (Interface u dU dI c)
   | c == Cart.empty = Interface u dU dI c
-  | otherwise = buy2 (Interface newu newdU newdI newC)
+  | otherwise = buy (Interface newu newdU newdI newC)
   where
     newdU = Database.insert newu (User.getId newu) (Database.delete u dU)
     newdI = Database.insert newi (Item.getEan newi) (Database.delete (fst nC) dI)
@@ -159,69 +172,3 @@ buy2 (Interface u dU dI c)
     newu  = User.removeWallet price (User.addSpent price u)
     price = Item.getPrice (fst nC)
     nC    = Cart.getFirst c
-
--- ANSVARIG: GRIM
--- createUser
--- gets a user and a database, adds this new user to the database and returns the new database.
-createUser :: User -> Database User -> Database User
-createUser u dB = Database.insert u (User.getId u) dB
-
--- ANSVARIG: GRIM
--- removeUser
--- gets a User and a database, removes the user from the database and returns the new database.
-removeUser :: User -> Database User -> Database User
-removeUser u dB = (Database.delete u) dB
-
-findUser :: Id -> Database User -> User
-findUser i dB = Database.grabWithId i dB
-
-
---ANSVARIG: GRIM
--- removeItem
--- gets a Item and a Database, removes item from the Database and returns the new Database.
-removeItem :: Id -> Database Item -> Database Item
-removeItem i dB = Database.deleteWithID i dB
-
---ANSVARIG: GRIM
--- addItem
--- gets a Item and a Database, adds the item to the Database and returns the new Database.
-addItem :: Name -> Ean -> Price -> Stock -> Database Item -> Database Item
-addItem a b c d dB = Database.insert (Item.createItem a b c d) b dB
-
---ANSVARIG: JESPER
--- removeFromStock
--- gets an amount and a item, and removes x from i's stockvalue
-removeFromStock :: Int -> Item -> Item
-removeFromStock x i = Item.removeFromStock x i
-
---ANSVARIG: JESPER
--- addStock
--- gets an amount and a item and adds x to i's stockvalue
-addToStock :: Int -> Item -> Item
-addToStock x i = Item.addToStock x i
-
---ANSVARIG: JESPER
---replaceStock
--- replaces i's stock value in the database with x (only to be used if items is recounted)
-replaceStock :: Int -> Item -> Item
-replaceStock x = Item.replaceStock x
-
------------------------------------------------
--- END OF ADMIN FUNCTIONS
------------------------------------------------
-findItem :: Ean -> Database Item -> Item
-findItem a b = Database.grabWithId a b
-
-itemToCart :: Item -> Cart -> Cart
-itemToCart i c = Cart.addToCart i c
-
--- remove item from Cart
-removeFromCart :: Item -> Cart -> Cart
-removeFromCart i c = Cart.removeFromCart i c
-
-getSaldo :: User -> Wallet
-getSaldo u = User.getWallet u
-
--- fetches all item in cart from database and updates stockvalues
-buy :: User -> Cart -> Database User -> Database Item ->(Database User, Database Item)
-buy u c dU dI = undefined
