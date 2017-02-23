@@ -9,7 +9,7 @@ type Wallet = Int
 type Spent = Int
 type IsAdmin = Bool
 
-data User = User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
+data User = Void | User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
 
 newUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> User
 newUser a b c d e = User a b c d e

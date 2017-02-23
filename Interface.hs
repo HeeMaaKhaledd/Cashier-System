@@ -4,10 +4,26 @@ import Cart
 import Database
 import Test.HUnit
 
-type Name = String
-type Ean  = Int
+-- END OF IMPORT
+
+type Name  = String
+type Ean   = Int
+type Price = Int
+type Stock = Int
 type Id   = Int
 type Wallet = Int
+
+data Interface = Interface User (Database User) (Database Item) Cart deriving (Show,Eq)
+
+-- END OF DATASTRUCTURES
+
+-- Functions to grab information from our Interface datastructure!
+newInterface a b c d = Interface a b c d
+getUser (Interface u dU dI c) = u
+getDu (Interface u dU dI c)   = dU
+getDi (Interface u dU dI c)   = dI
+getCart (Interface u dU dI c) = c
+
 -----------------------------------------------
 -- START OF ADMIN FUNCTIONS
 -----------------------------------------------
@@ -28,17 +44,20 @@ removeUser :: User -> Database User -> Database User
 removeUser u dB = (Database.delete u) dB
 
 findUser :: Id -> Database User -> User
-findUser u dB = undefined
+findUser i dB = Database.grabWithId i dB
+
 
 --ANSVARIG: GRIM
 -- removeItem
 -- gets a Item and a Database, removes item from the Database and returns the new Database.
-removeItem = undefined
+removeItem :: Id -> Database Item -> Database Item
+removeItem i dB = Database.deleteWithID i dB
 
 --ANSVARIG: GRIM
 -- addItem
 -- gets a Item and a Database, adds the item to the Database and returns the new Database.
-addItem = undefined
+addItem :: Name -> Ean -> Price -> Stock -> Database Item -> Database Item
+addItem a b c d dB = Database.insert (Item.createItem a b c d) b dB
 
 --ANSVARIG: JESPER
 -- removeFromStock
@@ -62,7 +81,7 @@ replaceStock x = Item.replaceStock x
 -- END OF ADMIN FUNCTIONS
 -----------------------------------------------
 findItem :: Ean -> Database Item -> Item
-findItem = undefined
+findItem a b = Database.grabWithId a b
 
 itemToCart :: Item -> Cart -> Cart
 itemToCart i c = addToCart i c
@@ -75,4 +94,5 @@ getSaldo :: User -> Wallet
 getSaldo u = User.getWallet u
 
 -- fetches all item in cart from database and updates stockvalues
-buy x = undefined
+buy :: User -> Cart -> Database User -> Database Item ->(Database User, Database Item)
+buy u c dU dI = undefined
