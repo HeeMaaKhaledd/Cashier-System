@@ -100,4 +100,30 @@ If you want examples, read the example for Item.hs... Same principle!
 
 ## Description of Cart
 
+Cart.hs is our way of representing a shopping cart! This is our way of keeping track on the product our customer picks.  
+Cart has only one datatype which is declared in the following way:
+```Haskell  
+
+type Cart = [Item]  
+
+```
+The datatype Cart is simply the linked list of items. This is to create a simple structure where we can easily loop through and calculate our prices.
+This may not be the best in time Complexity however, we don't expect someone to add infinite amount of items in their cart.  
+
+If you Cart.hs is imported you make the following functions reachable.  
+
+```Haskell
+
+empty :: Cart
+addToCart :: Item -> Cart -> Cart
+removeFromCart :: Item -> Cart -> Cart
+removeFromCartAUX :: Item -> Cart -> Cart -> Cart
+calculatePrice :: Cart -> Int
+getFirst :: Cart -> (Item,Cart)
+
+```
+So in the structure of the function specifications for the functions above. You can see a bunch of types with an arrow pointing right. The last arrow indicates what the function returns and the other arrows is just separating arguments the function takes while being called!  
+
+If you want examples, read the example for Item.hs... Same principle!
+
 ## Description of Interface
