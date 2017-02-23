@@ -4,17 +4,12 @@ import Cart
 import Database
 import Test.HUnit
 
-<<<<<<< HEAD
 -- END OF IMPORT
 
-type Name = String
-type Ean  = Int
-=======
 type Name  = String
 type Ean   = Int
 type Price = Int
 type Stock = Int
->>>>>>> 468c23d1a7220b05d131bec61fd01ce731ab0674
 type Id   = Int
 type Wallet = Int
 
