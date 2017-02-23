@@ -98,4 +98,6 @@ So in the structure of the function specifications for the functions above. You 
 
 If you want examples, read the example for Item.hs... Same principle!
 
+## Description of Cart
+
 ## Description of Interface
