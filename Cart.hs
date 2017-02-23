@@ -23,4 +23,5 @@ calculatePrice :: Cart -> Int
 calculatePrice [] = 0
 calculatePrice (c:cs) = getPrice c + calculatePrice cs
 
+getFirst :: Cart -> (Item,Cart)
 getFirst (c:cs) = (c,cs)
