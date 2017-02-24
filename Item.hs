@@ -27,6 +27,8 @@ setName x (Item name ean price stock) = Item x ean price stock
    PRE:  True
    POST: Returns the argument name
    SIDE EFFECTS: ... if any, including exceptions ...
+   EXAMPLES: getName (createItem "test" 1000101 35 100)
+            = "test"
 -}
 getName :: Item -> Name
 getName (Item name ean price stock) = name
@@ -34,7 +36,8 @@ getName (Item name ean price stock) = name
 {- setEan x
    PRE:  True
    POST: Changes the Items ean code
-   EXAMPLES: ... especially if useful to highlight delicate issues; also consider including counter-examples ...
+   EXAMPLES: setEan 123456 (createItem "test" 1000101 35 100)
+             = Item "test" 123456 35 100
 -}
 -- set the product ean-code
 setEan :: Ean -> Item -> Item
@@ -43,7 +46,8 @@ setEan x (Item name ean price stock) = Item name x price stock
 {- getEan
    PRE: True
    POST: Returns the ean code from the item
-   EXAMPLES:
+   EXAMPLES:getEan (createItem "test" 1000101 35 100)
+            = 1000101
 -}
 getEan :: Item -> Ean
 getEan (Item name ean price stock) = ean
@@ -51,7 +55,8 @@ getEan (Item name ean price stock) = ean
 {- setPrice x
    PRE:  Price is a postive int
    POST: Sets the ean code to x, provided x is an integer
-   EXAMPLES: ... especially if useful to highlight delicate issues; also consider including counter-examples ...
+   EXAMPLES: setPrice 10 (createItem "test" 1000101 35 100)
+            = Item "test" 1000101 10 100
 -}
 --set the product price
 setPrice :: Price -> Item -> Item
@@ -60,7 +65,7 @@ setPrice x (Item name ean price stock) = Item name ean x stock
 {-
    PRE: getPrice
    POST: retrieves the price of an item
-   EXAMPLES:
+   EXAMPLES:getPrice (createItem "test" 1000101 35 100)
 -}
 getPrice :: Item -> Price
 getPrice (Item name ean price stock) = price
@@ -68,7 +73,8 @@ getPrice (Item name ean price stock) = price
 {- addToStock x
    PRE:  True
    POST: adding an int to the stock value
-   EXAMPLES: ... especially if useful to highlight delicate issues; also consider including counter-examples ...
+   EXAMPLES:addToStock 1237 (createItem "test" 1000101 35 100)
+          = Item "test" 1000101 35 1337)
 -}
 --add more items to stock.
 addToStock :: Stock -> Item -> Item
@@ -79,7 +85,8 @@ addToStock x (Item name ean price stock)
  {- removeFromStock x
     PRE: True
     POST: subtracting the stack value with an int.
-    EXAMPLES: ... especially if useful to highlight delicate issues; also consider including counter-examples ...
+    EXAMPLES:removeFromStock 88 (createItem "test" 1000101 35 100)
+            = Item "test" 1000101 35 12
  -}
 removeFromStock :: Stock -> Item -> Item
 removeFromStock x (Item name ean price stock)
@@ -90,7 +97,8 @@ removeFromStock x (Item name ean price stock)
   {- replaceStock x
      PRE:  Poitive integer
      POST: Replacing the current stock value with another integer.
-     EXAMPLES: ... especially if useful to highlight delicate issues; also consider including counter-examples ...
+     EXAMPLES: replaceStock 1337 (createItem "test" 1000101 35 100)
+              = Item "test" 1000101 35 1337
   -}
 replaceStock :: Stock -> Item -> Item
 replaceStock x (Item name ean price stock) = (Item name ean price x)
@@ -98,15 +106,17 @@ replaceStock x (Item name ean price stock) = (Item name ean price x)
 {- getStock
    PRE:  True
    POST: Retrieves the stock value
-   EXAMPLES: ... especially if useful to highlight delicate issues; also consider including counter-examples ...
+   EXAMPLES:getStock (createItem "test" 1000101 35 100)
+            = 100
 -}
 getStock :: Item -> Stock
 getStock (Item name ean price stock) = stock
 
 {- empty
    PRE:  True
-   POST: Returns an Item empty string and 3 integers
-   EXAMPLES: ... especially if useful to highlight delicate issues; also consider including counter-examples ...
+   POST: Returns an Item empty string and 3 zeroes
+   EXAMPLES: empty
+            = Item "" 0 0 0
 -}
 empty :: Item
 empty = Item "" 0 0 0
