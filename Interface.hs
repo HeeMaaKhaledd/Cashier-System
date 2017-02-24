@@ -6,13 +6,14 @@ import Test.HUnit
 
 -- END OF IMPORT
 
-type Name  = String
-type Ean   = Int
-type Price = Int
-type Stock = Int
-type Id   = Int
-type Wallet = Int
-type IsAdmin = Bool
+type Name     = String
+type Ean      = Int
+type Price    = Int
+type Stock    = Int
+type Id       = Int
+type Wallet   = Int
+type Spent    = Int
+type IsAdmin  = Bool
 
 data Interface = Interface User (Database User) (Database Item) Cart deriving (Show,Eq)
 
