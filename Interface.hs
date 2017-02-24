@@ -17,8 +17,6 @@ type IsAdmin  = Bool
 
 data Interface = Interface User (Database User) (Database Item) Cart deriving (Show,Eq)
 
-------
-
 --testing interface ..
 bajs = newInterface a b c d
   where
