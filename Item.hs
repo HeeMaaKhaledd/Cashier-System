@@ -43,7 +43,6 @@ getName (Item name ean price stock) = name
    EXAMPLES: setEan 123456 (createItem "test" 1000101 35 100)
              = Item "test" 123456 35 100
 -}
--- set the product ean-code
 setEan :: Ean -> Item -> Item
 setEan x (Item name ean price stock) = Item name x price stock
 
@@ -62,7 +61,6 @@ getEan (Item name ean price stock) = ean
    EXAMPLES: setPrice 10 (createItem "test" 1000101 35 100)
             = Item "test" 1000101 10 100
 -}
---set the product price
 setPrice :: Price -> Item -> Item
 setPrice x (Item name ean price stock) = Item name ean x stock
 
@@ -80,7 +78,6 @@ getPrice (Item name ean price stock) = price
    EXAMPLES:addToStock 1237 (createItem "test" 1000101 35 100)
           = Item "test" 1000101 35 1337)
 -}
---add more items to stock.
 addToStock :: Stock -> Item -> Item
 addToStock x (Item name ean price stock)
  | x > 0 = Item name ean price (stock + x)
