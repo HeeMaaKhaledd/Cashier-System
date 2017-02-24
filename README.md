@@ -1,5 +1,9 @@
 # Cashier-System
 A Haskell based Cashier-System
+![alt text][logo]
+
+[logo]: FlowChart.svg "FlowChart over Cashier-System"
+
 ## Description of Item
 Item.hs is the way we chose to represent a product of in the Cashier-System.
 Our Item.hs has its own datastructure which is defined in the following way.
