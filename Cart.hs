@@ -1,6 +1,7 @@
 module Cart(Cart,Cart.empty,addToCart,removeFromCart,getFirst) where
 import Item
 import Database
+import Test.HUnit
 
 type Cart = [Item]
 
@@ -44,3 +45,22 @@ removeFromCartAUX i (c:cs) newC
 getFirst :: Cart -> (Item,Cart)
 getFirst [] = error "no items in Cart"
 getFirst (c:cs) = (c,cs)
+
+---------TestCases---------
+runtests = runTestTT $ TestList [test1, test2, test3, test4] -- , , test5, test6, test6a,test7]
+
+test1 = TestCase $ assertEqual "empty test ((Cart))" ([]) (Cart.empty)
+
+test2 = TestCase $ assertEqual "addToCart Item Sebbe 101 10 1 ([Item name ean price stock])" ([createItem "Sebbe" 101 10 1]) (addToCart (createItem "Sebbe" 101 10 1) Cart.empty)
+
+test3 = TestCase $ assertEqual "removeFromCart Item sebbe 101 10 1 ([Item cola 193 10 10), (Item sebbe 101 10 1)])" [(createItem "cola" 193 10 10)] (removeFromCart (createItem "Sebbe" 101 10 1) ([(createItem "cola" 193 10 10), (createItem "Sebbe" 101 10 1)]))
+
+test4 = TestCase $ assertEqual "getFirst ([Item sebbe 101 10 1, Item cola 193 10 10]))" ((createItem "Sebbe" 101 10 1), [(createItem "cola" 193 10 10)]) (getFirst [(createItem "Sebbe" 101 10 1), (createItem "cola" 193 10 10)])
+--
+-- test5 = TestCase $ assertEqual "getPrice ((Item name ean price stock))" (0) (getPrice empty)
+--
+-- test6 = TestCase $ assertEqual "addToStock ((Item name ean price stock))" (createItem "" 0 0 1337) (addToStock 1337 empty )
+--
+-- test6a = TestCase $ assertEqual "removeFromStock ((Item name ean price stock))" (createItem "" 0 0 10) (removeFromStock 10 (createItem "" 0 0 20))
+--
+-- test7 = TestCase $ assertEqual "getStock ((Item name ean price stock))" (20) (getStock (createItem "" 0 0 20) )
