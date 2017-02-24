@@ -1,4 +1,4 @@
-module Cart(Cart,Cart.empty,addToCart,removeFromCart,calculatePrice,getFirst) where
+module Cart(Cart,Cart.empty,addToCart,removeFromCart,getFirst) where
 import Item
 import Database
 

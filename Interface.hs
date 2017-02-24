@@ -1,8 +1,8 @@
 -- Creating module
 module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUser,
                   removeUser,findUser,setUserName,setUserId,makeUserAdmin,removeUserAdmin,
-                  getWallet,fillWallet,reduceWallet,clearWallet,createItem,removeItem,findItem,
-                  addToStock,removeFromStock,replaceStock,addToCart,removeFromCart,buy) where
+                  Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,Interface.clearWallet,Interface.createItem,removeItem,findItem,
+                  Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,buy) where
 
 import Item
 import User
