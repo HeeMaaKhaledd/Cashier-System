@@ -99,8 +99,8 @@ addSpent x (User c i wallet spent a)
    if s is lesser than 0 we also get an error.
 -}
 reduceSpent :: Spent -> User -> User
-reduceSpent x (User c i wallet spent)
-  | x >= 0 && x <= spent = User c i wallet (spent - x)
+reduceSpent x (User c i wallet spent isAdmin)
+  | x >= 0 && x <= spent = User c i wallet (spent - x) isAdmin
   | x < 0                = error "The value myst be greater than zero"
   | otherwise            = error "You can't reduce spent with more than spent already is"
 
