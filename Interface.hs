@@ -1,3 +1,9 @@
+-- Creating module
+module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUser,
+                  removeUser,findUser,setUserName,setUserId,makeUserAdmin,removeUserAdmin,
+                  getWallet,fillWallet,reduceWallet,clearWallet,createItem,removeItem,findItem,
+                  addToStock,removeFromStock,replaceStock,addToCart,removeFromCart,buy) where
+
 import Item
 import User
 import Cart
