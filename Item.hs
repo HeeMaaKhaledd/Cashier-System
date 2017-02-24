@@ -10,10 +10,14 @@ type Stock = Int
 
 data Item = Item Name Ean Price Stock deriving (Show, Eq)
 
--- only to help create item fast.
+{- createItem name ean price stock
+   PRE:  True
+   POST: takes all the arguments name,ean,price,stock and creates a item with this information.
+   EXAMPLES: createItem "test" 1000101 35 100 = Item "Test" 1000101 35 100
+-}
+createItem :: Name -> Ean -> Price -> Stock -> Item
 createItem a b c d = Item a b c d
 
--- set the product name
 {- setName x
    PRE:  True
    POST: Changing the string(name) to variable x which contains a string
