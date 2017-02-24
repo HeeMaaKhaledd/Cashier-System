@@ -1,5 +1,5 @@
 # Cashier-System
-A Haskell based Cashier-System
+A Haskell based Cashier-System  
 ![alt text][logo]
 
 [logo]: FlowChart.png "FlowChart over Cashier-System"
