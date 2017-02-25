@@ -234,7 +234,7 @@ adminItemMenu i message = do
   putStrLn "-- 1 -- CREATE ITEM      --"
   putStrLn "-- 2 -- REMOVE ITEM      --"
   putStrLn "-- 3 -- CHANGE ITEM      --"
-  putStrLn "-- 4 --                  --"
+  putStrLn "--   --                  --"
   putStrLn "--   --                  --"
   putStrLn "--   --                  --"
   putStrLn "--   --                  --"
@@ -248,7 +248,38 @@ adminItemMenu i message = do
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
   x <- getLine
-  
+  runAdminItemMenu (read x :: Int) i
+
+runAdminItemMenu c i
+  | c == 1 = do
+    putStrLn "Write name of the new item and hit ENTER"
+    name <- getLine
+    putStrLn "Write ean of the new item and hit ENTER"
+    ean <- getLine
+    putStrLn "Write price of the new item and hit ENTER"
+    price <- getLine
+    putStrLn "Write stock of the new iten and hit ENTER"
+    stock <- getLine
+
+    adminItemMenu (Interface.createItem name (read ean :: Int) (read price :: Int) (read stock :: Int) i) "Created item"
+
+  | c == 2 = do
+    putStrLn "Write id of the user you want to remove"
+    x <- getLine
+    adminUserMenu (Interface.removeUser (findUser (read x :: Int) i) i) "Removed a user"
+  | c == 3 = do
+    putStrLn "Write the id of the user you want to change"
+    x <- getLine
+    adminChangeUserMenu i "" (findUser (read x :: Int) i)
+
+  | c == 4 = do
+  putStrLn "Write the id of the user you want to do wallet functions on"
+  x <- getLine
+  adminChangeUserMenu i "" (findUser (read x :: Int) i)
+
+  | c == 0 = adminMenu i "You navigated back"
+  | otherwise = adminUserMenu i "You wrote a non existing number"
+
 
 adminChangeItemMenu i message = do
   system "clear"
