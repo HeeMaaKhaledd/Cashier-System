@@ -1,7 +1,7 @@
 -- improving readability of code.
 module User(User,setName,setId,getId,fillWallet,
             removeWallet,clearWallet,getWallet,
-            addSpent,removeSpent,makeAdmin,removeAdmin,newUser) where
+            addSpent,removeSpent,makeAdmin,removeAdmin,newUser, getAdminStatus) where
 
 type Name = String
 type Id = Int
@@ -124,3 +124,6 @@ makeAdmin (User c i wallet spent a) = User c i wallet spent True
 -}
 removeAdmin ::User -> User
 removeAdmin (User c i wallet spent a) = User c i wallet spent False
+
+getAdminStatus :: User -> Bool
+getAdminStatus (User c i wallet spent a) = a
