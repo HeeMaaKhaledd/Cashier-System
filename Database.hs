@@ -5,7 +5,7 @@
 --Black and white tree?
 -- Is there any other datatype that is better?
 module Database(Database,deleteWithID,delete,insert,grabWithId,empty) where
-
+import Test.HUnit
 type Id = Int -- eanCode for item, userId for users...
 
 type Database a = [(a,Id)]
@@ -71,3 +71,18 @@ grabWithId i [] = error "not in our database"
 grabWithId i (x:xs)
   | i == (snd x) = fst x
   | otherwise = grabWithId i xs
+
+
+
+---------TestCases---------
+runtests = runTestTT $ TestList [test1, test2, test3, test4, test5] 
+
+test1 = TestCase $ assertEqual "deleteWithID ((193 [(grim,193)])" (empty) (deleteWithID 193 [("grim",193)])
+
+test2 = TestCase $ assertEqual "delete (grim [(grim,193)193])" (empty) (delete "grim" [("grim",193)])
+
+test3 = TestCase $ assertEqual "insert sebbe 1001001 empty" ([("sebbe", 1001001)]) (insert "sebbe" 1001001 empty)
+
+test4 = TestCase $ assertEqual "grab jesper [(jesper,193)]" ("jesper") (grab "jesper" [("jesper",193)])
+
+test5 = TestCase $ assertEqual "grabWithId ((193 [(grim,193)]))" (("grim")) (grabWithId 193 [("grim",193)])

@@ -47,7 +47,7 @@ getFirst [] = error "no items in Cart"
 getFirst (c:cs) = (c,cs)
 
 ---------TestCases---------
-runtests = runTestTT $ TestList [test1, test2, test3, test4] -- , , test5, test6, test6a,test7]
+runtests = runTestTT $ TestList [test1, test2, test3, test4]
 
 test1 = TestCase $ assertEqual "empty test ((Cart))" ([]) (Cart.empty)
 
