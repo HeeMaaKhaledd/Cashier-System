@@ -56,11 +56,3 @@ test2 = TestCase $ assertEqual "addToCart Item Sebbe 101 10 1 ([Item name ean pr
 test3 = TestCase $ assertEqual "removeFromCart Item sebbe 101 10 1 ([Item cola 193 10 10), (Item sebbe 101 10 1)])" [(createItem "cola" 193 10 10)] (removeFromCart (createItem "Sebbe" 101 10 1) ([(createItem "cola" 193 10 10), (createItem "Sebbe" 101 10 1)]))
 
 test4 = TestCase $ assertEqual "getFirst ([Item sebbe 101 10 1, Item cola 193 10 10]))" ((createItem "Sebbe" 101 10 1), [(createItem "cola" 193 10 10)]) (getFirst [(createItem "Sebbe" 101 10 1), (createItem "cola" 193 10 10)])
---
--- test5 = TestCase $ assertEqual "getPrice ((Item name ean price stock))" (0) (getPrice empty)
---
--- test6 = TestCase $ assertEqual "addToStock ((Item name ean price stock))" (createItem "" 0 0 1337) (addToStock 1337 empty )
---
--- test6a = TestCase $ assertEqual "removeFromStock ((Item name ean price stock))" (createItem "" 0 0 10) (removeFromStock 10 (createItem "" 0 0 20))
---
--- test7 = TestCase $ assertEqual "getStock ((Item name ean price stock))" (20) (getStock (createItem "" 0 0 20) )

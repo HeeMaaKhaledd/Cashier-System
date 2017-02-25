@@ -126,8 +126,8 @@ reduceWallet amount user (Interface u dU dI c)
       j = User.removeWallet amount user
       k = User.getId user
 
-clearWallet :: Int -> User -> Interface -> Interface
-clearWallet amount user (Interface u dU dI c)
+clearWallet :: User -> Interface -> Interface
+clearWallet user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
     where
