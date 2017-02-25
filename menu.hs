@@ -247,6 +247,8 @@ adminItemMenu i message = do
   putStrLn "---------------------------"
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
+  x <- getLine
+  
 
 adminChangeItemMenu i message = do
   system "clear"
