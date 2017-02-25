@@ -2,7 +2,8 @@
 module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUser,
                   removeUser,findUser,setUserName,setUserId,makeUserAdmin,removeUserAdmin,
                   Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,Interface.clearWallet,Interface.createItem,removeItem,findItem,
-                  Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,buy,bajs) where
+                  Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,
+                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin) where
 
 import Item
 import User
@@ -40,6 +41,15 @@ newInterface a b c d = Interface a b c d
 getUser :: Interface -> User
 getUser (Interface u dU dI c) = u
 
+getCart :: Interface -> Cart
+getCart (Interface u dU dI c) = c
+
+getDatabaseItem :: Interface -> Database Item
+getDatabaseItem (Interface u dU dI c) = dI
+
+getDatabaseUser :: Interface -> Database User
+getDatabaseUser (Interface u dU dI c) = dU
+
 -- user handling
 
 createUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> Interface -> Interface
@@ -72,6 +82,9 @@ setUserId iD user (Interface u dU dI c)
       newdb = Database.insert j k (Database.delete user dU)
       j = User.setId iD user
       k = User.getId user
+
+getUserAdmin :: Interface -> Bool
+getUserAdmin (Interface u dU dI c) = User.getAdminStatus u
 
 makeUserAdmin:: User -> Interface -> Interface
 makeUserAdmin user (Interface u dU dI c)
