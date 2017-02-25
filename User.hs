@@ -3,6 +3,8 @@ module User(User,setName,setId,getId,fillWallet,
             removeWallet,clearWallet,getWallet,
             addSpent,removeSpent,makeAdmin,removeAdmin,newUser, getAdminStatus) where
 
+import Test.HUnit
+
 type Name = String
 type Id = Int
 type Wallet = Int
@@ -115,15 +117,33 @@ removeSpent (User c i wallet spent a) = User c i wallet 0 a
    PRE:  True
    POST: Returns the user u with a updated adminstatus
 -}
-makeAdmin ::User -> User
+makeAdmin :: User -> User
 makeAdmin (User c i wallet spent a) = User c i wallet spent True
 
 {- removeAdmin user u
    PRE:  True
    POST: Returns the with a updated adminstatus
 -}
-removeAdmin ::User -> User
+removeAdmin :: User -> User
 removeAdmin (User c i wallet spent a) = User c i wallet spent False
 
 getAdminStatus :: User -> Bool
 getAdminStatus (User c i wallet spent a) = a
+
+---------TestCases---------
+runtests = runTestTT $ TestList [test1, test2, test3, test4, test5, test6, test7,test8,test9,test10,test11,test12,test13,test14]
+
+test1 = TestCase $ assertEqual "setName John ((User c i wallet spent isAdmin))" (newUser "John" 1 10 100 False) (setName "John" (newUser "name" 1 10 100 False))
+test2 = TestCase $ assertEqual "getName ((User c i wallet spent isAdmin))" ("John") (getName (newUser "John" 1 10 100 False))
+test3 = TestCase $ assertEqual "setID 123 ((User c i wallet spent isAdmin))" (newUser "John" 123 10 100 False) (setId 123 (newUser "John" 1 10 100 False))
+test4 = TestCase $ assertEqual "getID ((User c i wallet spent isAdmin))" (1) (getId (newUser "John" 1 10 100 False))
+test5 = TestCase $ assertEqual "fillWallet 10 ((User c i wallet spent isAdmin))" (newUser "John" 1 1337 100 False) (fillWallet 10 (newUser "John" 1 1327 100 False))
+test6 = TestCase $ assertEqual "removeWallet 9 ((User c i wallet spent isAdmin))" (newUser "John" 1 1 100 False) (removeWallet 9 (newUser "John" 1 10 100 False))
+test7 = TestCase $ assertEqual "clearWallet ((User c i wallet spent isAdmin))" (newUser "John" 1 0 100 False) (clearWallet (newUser "John" 1 10 100 False))
+test8 = TestCase $ assertEqual "getWallet ((User c i wallet spent isAdmin))" (10) (getWallet (newUser "John" 1 10 100 False))
+test9 = TestCase $ assertEqual "addSpent 100 ((User c i wallet spent isAdmin))" (newUser "John" 1 10 200 False) (addSpent 100 (newUser "John" 1 10 100 False))
+test10 = TestCase $ assertEqual "reduceSpent 99 ((User c i wallet spent isAdmin))" (newUser "John" 1 10 1 False) (reduceSpent 99 (newUser "John" 1 10 100 False))
+test11 = TestCase $ assertEqual "removeSpent ((User c i wallet spent isAdmin))" (newUser "John" 1 10 0 False) (removeSpent (newUser "John" 1 10 100 False))
+test12 = TestCase $ assertEqual "makeAdmin ((User c i wallet spent isAdmin))" (newUser "John" 1 10 100 True) (makeAdmin (newUser "John" 1 10 100 False))
+test13 = TestCase $ assertEqual "removeAdmin ((User c i wallet spent isAdmin))" (newUser "John" 1 10 100 False) (removeAdmin (newUser "John" 1 10 100 True ))
+test14 = Testcase $ assertEqual "getAdminStatus ((User c i wallet spent isAdmin))" (newUser "John" 1 10 100 False) (getAdminStatus(newUser "John" 1 10 100 True))
