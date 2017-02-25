@@ -130,6 +130,7 @@ removeAdmin (User c i wallet spent a) = User c i wallet spent False
 getAdminStatus :: User -> Bool
 getAdminStatus (User c i wallet spent a) = a
 
+-- find . -name "*.hs" | xargs wc -l
 ---------TestCases---------
 runtests = runTestTT $ TestList [test1, test2, test3, test4, test5, test6, test7,test8,test9,test10,test11,test12,test13,test14]
 
