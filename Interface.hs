@@ -145,6 +145,20 @@ removeItem :: Item -> Interface -> Interface
 removeItem i (Interface u dU dI c) = Interface u dU newdb c
   where newdb = Database.delete i dI
 
+setItemName :: Name -> Item -> Interface -> Interface
+setItemName name item (Interface u dU dI c) = Interface u dU newdb c
+    where
+      newdb = Database.insert j k (Database.delete item dI)
+      j = Item.setName name item
+      k = Item.getName item
+
+setItemId :: Ean -> Item -> Interface -> Interface
+setItemId ean item (Interface u dU dI c) = Interface u dU newdb c
+    where
+      newdb = Database.insert j k (Database.delete item dI)
+      j = Item.setEan ean item
+      k = Item.getEan item
+
 findItem :: Ean -> Interface -> Item
 findItem ean (Interface u dU dI c) = Database.grabWithId ean dI
 
