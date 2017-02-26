@@ -3,7 +3,7 @@ module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUs
                   removeUser,findUser,setUserName,setUserId,makeUserAdmin,removeUserAdmin,
                   Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,Interface.clearWallet,Interface.createItem,removeItem,findItem,
                   Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,
-                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin) where
+                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemId,Interface.setItemName) where
 
 import Item
 import User
