@@ -356,7 +356,7 @@ runAdminChangeItemMenu c i item
     putStrLn "Write the ean you want this item to have and hit enter"
     ean <- getLine
     let k = Interface.setItemEan (read ean :: Int) item i
-      in adminChangeItemMenu k "changed ean" (Interface.findItem (Interface.getItemEan item) k)
+      in adminChangeItemMenu k "changed ean" (Interface.findItem (read ean :: Int) k)
 
   | c == 3 = do
     putStrLn "Write the price you want this item to have and hit enter"
