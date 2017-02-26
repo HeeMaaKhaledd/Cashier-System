@@ -1,9 +1,3 @@
--- to be implemented.
-
---Hashing Table -- is it a good thing in haskell?
---perhaps just use a binary tree?
---Black and white tree?
--- Is there any other datatype that is better?
 module Database(Database,deleteWithID,delete,insert,grabWithId,empty) where
 import Test.HUnit
 type Id = Int -- eanCode for item, userId for users...
@@ -75,7 +69,7 @@ grabWithId i (x:xs)
 
 
 ---------TestCases---------
-runtests = runTestTT $ TestList [test1, test2, test3, test4, test5] 
+runtests = runTestTT $ TestList [test1, test2, test3, test4, test5]
 
 test1 = TestCase $ assertEqual "deleteWithID ((193 [(grim,193)])" (empty) (deleteWithID 193 [("grim",193)])
 
