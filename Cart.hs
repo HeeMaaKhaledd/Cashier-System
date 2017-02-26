@@ -1,4 +1,4 @@
-module Cart(Cart,Cart.empty,addToCart,removeFromCart,getFirst,calculatePrice) where
+module Cart(Cart,Cart.empty,addToCart,removeFromCart,getFirst,calculatePrice,cartUpdate) where
 import Item
 import Database
 import Test.HUnit
@@ -49,6 +49,15 @@ getFirst (c:cs) = (c,cs)
 
 calculatePrice :: Cart -> Price
 calculatePrice c = sum (map Item.getPrice c)
+
+cartUpdate :: Item -> Cart -> Cart
+cartUpdate i c = cartUpdateAUX i c Cart.empty
+
+cartUpdateAUX :: Item -> Cart -> Cart -> Cart
+cartUpdateAUX i [] newC     = newC
+cartUpdateAUX i (c:cs) newC
+  | Item.getEan i == Item.getEan c = cartUpdateAUX i cs (newC ++ [i])
+  | otherwise = cartUpdateAUX i cs (newC ++ [c])
 
 ---------TestCases---------
 runtests = runTestTT $ TestList [test1, test2, test3, test4]
