@@ -42,10 +42,13 @@ runMenu c i
     putStrLn "---------------------------"
     mapM_ putStrLn (map show(Interface.getDatabaseItem i))
     putStrLn "---------------------------"
+    putStrLn "-- 0 -- NAVIGATE BACK    --"
+    putStrLn "---------------------------"
     putStrLn "--  Write your ean code  --"
     putStrLn "---------------------------"
     x <- getLine
-    menu (addToCart (findItem (read x :: Int) i) i) ("You added " ++  (show (findItem (read x :: Int) i)) ++ " to the Cart")
+    if ((read x ::Int )== 0) then menu i "Navigated back"
+      else menu (addToCart (findItem (read x :: Int) i) i) ("You added " ++  (show (findItem (read x :: Int) i)) ++ " to the Cart")
 
   | c == 2 = do
     system "clear"
@@ -56,10 +59,13 @@ runMenu c i
     putStrLn "---------------------------"
     mapM_ putStrLn (map show(Interface.getCart i))
     putStrLn "---------------------------"
+    putStrLn "-- 0 -- NAVIGATE BACK    --"
+    putStrLn "---------------------------"
     putStrLn "--  Write your ean code  --"
     putStrLn "---------------------------"
     x <- getLine
-    menu (removeFromCart (findItem (read x :: Int) i) i) ("You removed " ++  (show (findItem (read x :: Int) i)) ++ " from the Cart")
+    if ((read x ::Int )== 0) then menu i "Navigated back"
+      else menu (removeFromCart (findItem (read x :: Int) i) i) ("You removed " ++  (show (findItem (read x :: Int) i)) ++ " from the Cart")
 
   | c == 3 = do
     menu (buy i) ("You bought the following Cart " ++ (show (Interface.getCart i)))
@@ -266,22 +272,18 @@ runAdminItemMenu c i
   | c == 2 = do
     putStrLn "Write id of the user you want to remove"
     x <- getLine
-    adminUserMenu (Interface.removeUser (findUser (read x :: Int) i) i) "Removed a user"
+    adminItemMenu (Interface.removeItem (findItem (read x :: Int) i) i) "Removed a item"
   | c == 3 = do
-    putStrLn "Write the id of the user you want to change"
+    putStrLn "Write the id of the item you want to change"
     x <- getLine
-    adminChangeUserMenu i "" (findUser (read x :: Int) i)
-
-  | c == 4 = do
-  putStrLn "Write the id of the user you want to do wallet functions on"
-  x <- getLine
-  adminChangeUserMenu i "" (findUser (read x :: Int) i)
+    let
+      k = findItem (read x :: Int) i
+      in adminChangeItemMenu i (("Changing item: ") ++ (show k)) k
 
   | c == 0 = adminMenu i "You navigated back"
-  | otherwise = adminUserMenu i "You wrote a non existing number"
+  | otherwise = adminItemMenu i "You wrote a non existing number"
 
-
-adminChangeItemMenu i message = do
+adminChangeItemMenu i message item = do
   system "clear"
   putStrLn "---------------------------"
   putStrLn (show (Interface.getUser i))
@@ -305,3 +307,46 @@ adminChangeItemMenu i message = do
   putStrLn "---------------------------"
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
+  x <- getLine
+  runAdminChangeItemMenu (read x :: Int) i item
+
+runAdminChangeItemMenu c i item
+  | c == 1 = do
+    putStrLn "Write the name you want this item to have and hit enter"
+    name <- getLine
+    let
+      k = Interface.setItemName name item i
+      in adminChangeItemMenu k "changed name" (Interface.findItem (Interface.getItemEan item) k)
+
+  | c == 2 = do
+    putStrLn "Write the ean you want this item to have and hit enter"
+    ean <- getLine
+    let k = Interface.setItemEan (read ean :: Int) item i
+      in adminChangeItemMenu k "changed ean" (Interface.findItem (Interface.getItemEan item) k)
+
+  | c == 3 = do
+    putStrLn "Write the price you want this item to have and hit enter"
+    price <- getLine
+    let k = Interface.setItemPrice (read price :: Int) item i
+      in adminChangeItemMenu k "changed price" (Interface.findItem (Interface.getItemEan item) k)
+
+  | c == 4 = do
+    putStrLn "Write the amount you want this item to add to its stock and hit enter"
+    amount <- getLine
+    let k = Interface.addToStock (read amount :: Int) item i
+      in adminChangeItemMenu k "changed stockvalue" (Interface.findItem (Interface.getItemEan item) k)
+
+  | c == 5 = do
+    putStrLn "Write the amount you want this item to remove from its stock and hit enter"
+    amount <- getLine
+    let k = Interface.removeFromStock (read amount :: Int) item i
+      in adminChangeItemMenu k "changed stockvalue" (Interface.findItem (Interface.getItemEan item) k)
+
+  | c == 6 = do
+    putStrLn "Write the amount you want this item to have in stock and hit enter"
+    amount <- getLine
+    let k = Interface.replaceStock (read amount :: Int) item i
+      in adminChangeItemMenu k "changed stockvalue" (Interface.findItem (Interface.getItemEan item) k)
+
+  | c == 0 = adminItemMenu i "You navigated back"
+  | otherwise = adminChangeItemMenu i "You wrote a non existing number" item
