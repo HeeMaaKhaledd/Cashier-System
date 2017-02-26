@@ -8,7 +8,7 @@ module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUs
                   buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,
                   Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,
                   Interface.calculateCartPrice,Interface.getDatabaseUser,
-                  Check.checkIfOnlyInt,Check.checkIfBool) where
+                  Check.checkIfOnlyInt,Check.checkIfBool, Interface.getUserName) where
 
 import Check
 import Item
@@ -79,6 +79,9 @@ setUserName name user (Interface u dU dI c)
       newdb = Database.insert j k (Database.delete user dU)
       j = User.setName name user
       k = User.getId user
+
+getUserName :: User -> Name
+getUserName a = User.getName a
 
 setUserId :: Id -> User -> Interface -> Interface
 setUserId iD user (Interface u dU dI c)
