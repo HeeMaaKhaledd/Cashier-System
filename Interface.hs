@@ -3,7 +3,7 @@ module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUs
                   removeUser,findUser,setUserName,setUserId,makeUserAdmin,removeUserAdmin,
                   Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,Interface.clearWallet,Interface.createItem,removeItem,findItem,
                   Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,
-                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemId,Interface.setItemName) where
+                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,Interface.setItemName,Interface.getItemEan) where
 
 import Item
 import User
@@ -79,9 +79,8 @@ setUserId iD user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
     where
-      newdb = Database.insert j k (Database.delete user dU)
+      newdb = Database.insert j iD (Database.delete user dU)
       j = User.setId iD user
-      k = User.getId user
 
 getUserAdmin :: Interface -> Bool
 getUserAdmin (Interface u dU dI c) = User.getAdminStatus u
@@ -150,14 +149,16 @@ setItemName name item (Interface u dU dI c) = Interface u dU newdb c
     where
       newdb = Database.insert j k (Database.delete item dI)
       j = Item.setName name item
-      k = Item.getName item
-
-setItemId :: Ean -> Item -> Interface -> Interface
-setItemId ean item (Interface u dU dI c) = Interface u dU newdb c
-    where
-      newdb = Database.insert j k (Database.delete item dI)
-      j = Item.setEan ean item
       k = Item.getEan item
+
+getItemEan :: Item -> Ean
+getItemEan i = Item.getEan i
+
+setItemEan :: Ean -> Item -> Interface -> Interface
+setItemEan ean item (Interface u dU dI c) = Interface u dU newdb c
+    where
+      newdb = Database.insert j ean (Database.delete item dI)
+      j = Item.setEan ean item
 
 findItem :: Ean -> Interface -> Item
 findItem ean (Interface u dU dI c) = Database.grabWithId ean dI
