@@ -9,7 +9,9 @@ menu i message = do
   putStrLn "---------------------------"
   putStrLn (show (Interface.getUser i))
   putStrLn "---------------------------"
-  putStrLn (show (Interface.getCart i))
+  putStrLn "--   YOUR CART CONTAIN   --"
+  putStrLn "---------------------------"
+  mapM_ putStrLn (map show (Interface.getCart i))
   putStrLn "---------------------------"
   putStrLn "==========================="
   putStrLn "-- 1 -- ADD TO CART      --"
@@ -24,7 +26,7 @@ menu i message = do
   putStrLn "-- 0 -- ADMIN ONLY       --"
   putStrLn "==========================="
   putStrLn "---------------------------"
-  putStrLn message
+  putStrLn ("--" ++ message)
   putStrLn "---------------------------"
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
@@ -35,6 +37,12 @@ menu i message = do
 runMenu c i
   | c == 1 = do
     system "clear"
+    putStrLn "---------------------------"
+    putStrLn ("-- " ++ (show (Interface.getUser i)))
+    putStrLn "---------------------------"
+    putStrLn "--   YOUR CART CONTAIN   --"
+    putStrLn "---------------------------"
+    mapM_ putStrLn (map show (Interface.getCart i))
     putStrLn "---------------------------"
     putStrLn "-- ADD THE ITEM TO CART  --"
     putStrLn "---------------------------"
@@ -52,6 +60,12 @@ runMenu c i
 
   | c == 2 = do
     system "clear"
+    putStrLn "---------------------------"
+    putStrLn ("-- " ++ (show (Interface.getUser i)))
+    putStrLn "---------------------------"
+    putStrLn "--   YOUR CART CONTAIN   --"
+    putStrLn "---------------------------"
+    mapM_ putStrLn (map show (Interface.getCart i))
     putStrLn "---------------------------"
     putStrLn "-- REMOVE ITEM FROM CART --"
     putStrLn "---------------------------"
@@ -79,7 +93,9 @@ adminMenu i message = do
   putStrLn "---------------------------"
   putStrLn (show (Interface.getUser i))
   putStrLn "---------------------------"
-  putStrLn (show (Interface.getCart i))
+  putStrLn "--   YOUR CART CONTAIN   --"
+  putStrLn "---------------------------"
+  mapM_ putStrLn (map show (Interface.getCart i))
   putStrLn "---------------------------"
   putStrLn "==========================="
   putStrLn "-- 1 -- USER FIXES       --"
@@ -94,7 +110,7 @@ adminMenu i message = do
   putStrLn "-- 0 -- NAVIGATE BACK    --"
   putStrLn "==========================="
   putStrLn "---------------------------"
-  putStrLn message
+  putStrLn ("--" ++ message)
   putStrLn "---------------------------"
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
@@ -113,7 +129,9 @@ adminUserMenu i message = do
   putStrLn "---------------------------"
   putStrLn (show (Interface.getUser i))
   putStrLn "---------------------------"
-  putStrLn (show (Interface.getCart i))
+  putStrLn "--   YOUR CART CONTAIN   --"
+  putStrLn "---------------------------"
+  mapM_ putStrLn (map show (Interface.getCart i))
   putStrLn "---------------------------"
   putStrLn "==========================="
   putStrLn "-- 1 -- CREATE USER      --"
@@ -128,11 +146,14 @@ adminUserMenu i message = do
   putStrLn "-- 0 -- NAVIGATE BACK    --"
   putStrLn "==========================="
   putStrLn "---------------------------"
-  putStrLn message
+  putStrLn "-- USERS IN OUR DATABASE --"
+  putStrLn "---------------------------"
+  mapM_ putStrLn $ map show (map fst (Interface.getDatabaseUser i))
+  putStrLn "---------------------------"
+  putStrLn ("--" ++ message)
   putStrLn "---------------------------"
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
-  putStrLn (show i)
   x <- getLine
   runAdminUserMenu (read x :: Int) i
 
@@ -171,7 +192,9 @@ adminChangeUserMenu i message u = do
   putStrLn "---------------------------"
   putStrLn (show (Interface.getUser i))
   putStrLn "---------------------------"
-  putStrLn (show (Interface.getCart i))
+  putStrLn "--   YOUR CART CONTAIN   --"
+  putStrLn "---------------------------"
+  mapM_ putStrLn (map show (Interface.getCart i))
   putStrLn "---------------------------"
   putStrLn "==========================="
   putStrLn "-- 1 -- SET USERNAME     --"
@@ -186,7 +209,7 @@ adminChangeUserMenu i message u = do
   putStrLn "-- 0 -- NAVIGATE BACK    --"
   putStrLn "==========================="
   putStrLn "---------------------------"
-  putStrLn message
+  putStrLn ("--" ++ message)
   putStrLn "---------------------------"
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
@@ -234,7 +257,9 @@ adminItemMenu i message = do
   putStrLn "---------------------------"
   putStrLn (show (Interface.getUser i))
   putStrLn "---------------------------"
-  putStrLn (show (Interface.getCart i))
+  putStrLn "--   YOUR CART CONTAIN   --"
+  putStrLn "---------------------------"
+  mapM_ putStrLn (map show (Interface.getCart i))
   putStrLn "---------------------------"
   putStrLn "==========================="
   putStrLn "-- 1 -- CREATE ITEM      --"
@@ -249,7 +274,11 @@ adminItemMenu i message = do
   putStrLn "-- 0 -- NAVIGATE BACK    --"
   putStrLn "==========================="
   putStrLn "---------------------------"
-  putStrLn message
+  putStrLn "--     ITEM IN SHOP      --"
+  putStrLn "---------------------------"
+  mapM_ putStrLn (map show(Interface.getDatabaseItem i))
+  putStrLn "---------------------------"
+  putStrLn ("--" ++ message)
   putStrLn "---------------------------"
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
@@ -278,7 +307,7 @@ runAdminItemMenu c i
     x <- getLine
     let
       k = findItem (read x :: Int) i
-      in adminChangeItemMenu i (("Changing item: ") ++ (show k)) k
+      in adminChangeItemMenu i "" k
 
   | c == 0 = adminMenu i "You navigated back"
   | otherwise = adminItemMenu i "You wrote a non existing number"
@@ -288,7 +317,9 @@ adminChangeItemMenu i message item = do
   putStrLn "---------------------------"
   putStrLn (show (Interface.getUser i))
   putStrLn "---------------------------"
-  putStrLn (show (Interface.getCart i))
+  putStrLn "--   YOUR CART CONTAIN   --"
+  putStrLn "---------------------------"
+  mapM_ putStrLn (map show (Interface.getCart i))
   putStrLn "---------------------------"
   putStrLn "==========================="
   putStrLn "-- 1 -- SET NAME         --"
@@ -303,7 +334,10 @@ adminChangeItemMenu i message item = do
   putStrLn "-- 0 -- NAVIGATE BACK    --"
   putStrLn "==========================="
   putStrLn "---------------------------"
-  putStrLn message
+  putStrLn "--   CURRENTLY EDITING   --"
+  putStrLn ("-- " ++ (show item))
+  putStrLn "---------------------------"
+  putStrLn ("--" ++ message)
   putStrLn "---------------------------"
   putStrLn "-- Pick your alternative --"
   putStrLn "---------------------------"
