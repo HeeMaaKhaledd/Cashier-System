@@ -1,8 +1,9 @@
-module Cart(Cart,Cart.empty,addToCart,removeFromCart,getFirst) where
+module Cart(Cart,Cart.empty,addToCart,removeFromCart,getFirst,calculatePrice) where
 import Item
 import Database
 import Test.HUnit
 
+type Price = Int
 type Cart = [Item]
 
 {- empty
@@ -45,6 +46,9 @@ removeFromCartAUX i (c:cs) newC
 getFirst :: Cart -> (Item,Cart)
 getFirst [] = error "no items in Cart"
 getFirst (c:cs) = (c,cs)
+
+calculatePrice :: Cart -> Price
+calculatePrice c = sum (map Item.getPrice c)
 
 ---------TestCases---------
 runtests = runTestTT $ TestList [test1, test2, test3, test4]

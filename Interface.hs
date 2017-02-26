@@ -1,10 +1,16 @@
 -- Creating module
 module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUser,
                   removeUser,findUser,setUserName,setUserId,makeUserAdmin,removeUserAdmin,
-                  Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,Interface.clearWallet,Interface.createItem,removeItem,findItem,
-                  Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,
-                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin) where
+                  Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,
+                  Interface.clearWallet,Interface.createItem,removeItem,findItem,
+                  Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,
+                  Interface.addToCart,Interface.removeFromCart,
+                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,
+                  Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,
+                  Interface.calculateCartPrice,Interface.getDatabaseUser,
+                  Check.checkIfOnlyInt,Check.checkIfBool) where
 
+import Check
 import Item
 import User
 import Cart
@@ -79,9 +85,8 @@ setUserId iD user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
     where
-      newdb = Database.insert j k (Database.delete user dU)
+      newdb = Database.insert j iD (Database.delete user dU)
       j = User.setId iD user
-      k = User.getId user
 
 getUserAdmin :: Interface -> Bool
 getUserAdmin (Interface u dU dI c) = User.getAdminStatus u
@@ -126,8 +131,8 @@ reduceWallet amount user (Interface u dU dI c)
       j = User.removeWallet amount user
       k = User.getId user
 
-clearWallet :: Int -> User -> Interface -> Interface
-clearWallet amount user (Interface u dU dI c)
+clearWallet :: User -> Interface -> Interface
+clearWallet user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
   | otherwise = Interface u newdb dI c
     where
@@ -144,6 +149,29 @@ createItem name ean price stock (Interface u dU dI c) = Interface u dU newdb c
 removeItem :: Item -> Interface -> Interface
 removeItem i (Interface u dU dI c) = Interface u dU newdb c
   where newdb = Database.delete i dI
+
+setItemName :: Name -> Item -> Interface -> Interface
+setItemName name item (Interface u dU dI c) = Interface u dU newdb c
+    where
+      newdb = Database.insert j k (Database.delete item dI)
+      j = Item.setName name item
+      k = Item.getEan item
+
+getItemEan :: Item -> Ean
+getItemEan i = Item.getEan i
+
+setItemEan :: Ean -> Item -> Interface -> Interface
+setItemEan ean item (Interface u dU dI c) = Interface u dU newdb c
+    where
+      newdb = Database.insert j ean (Database.delete item dI)
+      j = Item.setEan ean item
+
+setItemPrice :: Price -> Item -> Interface -> Interface
+setItemPrice price item (Interface u dU dI c) = Interface u dU newdb c
+  where
+    newdb = Database.insert j k (Database.delete item dI)
+    j = Item.setPrice price item
+    k = Item.getEan item
 
 findItem :: Ean -> Interface -> Item
 findItem ean (Interface u dU dI c) = Database.grabWithId ean dI
@@ -177,6 +205,9 @@ addToCart item (Interface u dU dI c) = Interface u dU dI (Cart.addToCart item c)
 
 removeFromCart :: Item -> Interface -> Interface
 removeFromCart item (Interface u dU dI c) = Interface u dU dI (Cart.removeFromCart item c)
+
+calculateCartPrice :: Interface -> Price
+calculateCartPrice (Interface u dU dI c) = Cart.calculatePrice c
 
 buy :: Interface -> Interface
 buy (Interface u dU dI c)
