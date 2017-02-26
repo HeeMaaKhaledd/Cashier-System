@@ -160,6 +160,13 @@ setItemEan ean item (Interface u dU dI c) = Interface u dU newdb c
       newdb = Database.insert j ean (Database.delete item dI)
       j = Item.setEan ean item
 
+setItemPrice :: Price -> Item -> Interface -> Interface
+setItemPrice price item (Interface u dU dI c) = Interface u dU newdb
+  where
+    newdb = Database.insert j k (Database.delete item dI)
+    j = Item.setPrice price item
+    k = Item.getEan item
+
 findItem :: Ean -> Interface -> Item
 findItem ean (Interface u dU dI c) = Database.grabWithId ean dI
 
