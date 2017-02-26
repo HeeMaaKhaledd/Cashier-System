@@ -2,7 +2,8 @@ import Interface
 import System.Process
 
 main = do
-    menu bajs ""
+    menu k ("Welcome " ++ (Interface.getUserName (Interface.getUser k)))
+      where k = bajs
 
 menu i message = do
   system "clear"
@@ -48,7 +49,7 @@ runMenu c i
     putStrLn "---------------------------"
     putStrLn "--     ITEM IN SHOP      --"
     putStrLn "---------------------------"
-    mapM_ putStrLn (map show(Interface.getDatabaseItem i))
+    mapM_ putStrLn $ map show (map fst(Interface.getDatabaseItem i))
     putStrLn "---------------------------"
     putStrLn "-- 0 -- NAVIGATE BACK    --"
     putStrLn "---------------------------"
@@ -136,7 +137,7 @@ adminUserMenu i message = do
   putStrLn "-- 1 -- CREATE USER      --"
   putStrLn "-- 2 -- REMOVE USER      --"
   putStrLn "-- 3 -- CHANGE USER      --"
-  putStrLn "-- 4 -- CHANGE WALLET    --"
+  putStrLn "--   --                  --"
   putStrLn "--   --                  --"
   putStrLn "--   --                  --"
   putStrLn "--   --                  --"
@@ -186,12 +187,6 @@ runAdminUserMenu c i
     x <- getLine
     if Interface.checkIfOnlyInt x then adminChangeUserMenu i "" (findUser (read x :: Int) i)
       else adminUserMenu i "Not a valid input! Try again."
-
-  | c == 4 = do
-  putStrLn "Write the id of the user you want to do wallet functions on"
-  x <- getLine
-  if Interface.checkIfOnlyInt x then adminChangeUserMenu i "" (findUser (read x :: Int) i)
-    else adminUserMenu i "Not a valid input! Try again."
 
   | c == 0 = adminMenu i "You navigated back"
   | otherwise = adminUserMenu i "You wrote a non existing number"
@@ -292,7 +287,7 @@ adminItemMenu i message = do
   putStrLn "---------------------------"
   putStrLn "--     ITEM IN SHOP      --"
   putStrLn "---------------------------"
-  mapM_ putStrLn (map show(Interface.getDatabaseItem i))
+  mapM_ putStrLn $ map show (map fst(Interface.getDatabaseItem i))
   putStrLn "---------------------------"
   putStrLn ("-- " ++ message)
   putStrLn "---------------------------"
