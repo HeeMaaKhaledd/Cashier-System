@@ -67,12 +67,6 @@ runMenu c i
     putStrLn "---------------------------"
     mapM_ putStrLn (map show (Interface.getCart i))
     putStrLn "---------------------------"
-    putStrLn "-- REMOVE ITEM FROM CART --"
-    putStrLn "---------------------------"
-    putStrLn "--     ITEM IN CART      --"
-    putStrLn "---------------------------"
-    mapM_ putStrLn (map show(Interface.getCart i))
-    putStrLn "---------------------------"
     putStrLn "-- 0 -- NAVIGATE BACK    --"
     putStrLn "---------------------------"
     putStrLn "--  Write your ean code  --"
