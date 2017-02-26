@@ -3,7 +3,8 @@ module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUs
                   removeUser,findUser,setUserName,setUserId,makeUserAdmin,removeUserAdmin,
                   Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,Interface.clearWallet,Interface.createItem,removeItem,findItem,
                   Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,
-                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,Interface.setItemName,Interface.getItemEan) where
+                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,
+                  Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,Interface.calculateCartPrice) where
 
 import Item
 import User
@@ -161,7 +162,7 @@ setItemEan ean item (Interface u dU dI c) = Interface u dU newdb c
       j = Item.setEan ean item
 
 setItemPrice :: Price -> Item -> Interface -> Interface
-setItemPrice price item (Interface u dU dI c) = Interface u dU newdb
+setItemPrice price item (Interface u dU dI c) = Interface u dU newdb c
   where
     newdb = Database.insert j k (Database.delete item dI)
     j = Item.setPrice price item
@@ -199,6 +200,9 @@ addToCart item (Interface u dU dI c) = Interface u dU dI (Cart.addToCart item c)
 
 removeFromCart :: Item -> Interface -> Interface
 removeFromCart item (Interface u dU dI c) = Interface u dU dI (Cart.removeFromCart item c)
+
+calculateCartPrice :: Interface -> Price
+calculateCartPrice (Interface u dU dI c) = Cart.calculatePrice c
 
 buy :: Interface -> Interface
 buy (Interface u dU dI c)
