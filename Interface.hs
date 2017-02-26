@@ -1,11 +1,16 @@
 -- Creating module
 module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUser,
                   removeUser,findUser,setUserName,setUserId,makeUserAdmin,removeUserAdmin,
-                  Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,Interface.clearWallet,Interface.createItem,removeItem,findItem,
-                  Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,
+                  Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,
+                  Interface.clearWallet,Interface.createItem,removeItem,findItem,
+                  Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,
+                  Interface.addToCart,Interface.removeFromCart,
                   buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,
-                  Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,Interface.calculateCartPrice,Interface.getDatabaseUser) where
+                  Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,
+                  Interface.calculateCartPrice,Interface.getDatabaseUser,
+                  Check.checkIfOnlyInt,Check.checkIfBool) where
 
+import Check
 import Item
 import User
 import Cart
