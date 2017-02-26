@@ -4,7 +4,7 @@ module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUs
                   Interface.getWallet,Interface.fillWallet,Interface.reduceWallet,Interface.clearWallet,Interface.createItem,removeItem,findItem,
                   Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,Interface.addToCart,Interface.removeFromCart,
                   buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,
-                  Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,Interface.calculateCartPrice) where
+                  Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,Interface.calculateCartPrice,Interface.getDatabaseUser) where
 
 import Item
 import User
