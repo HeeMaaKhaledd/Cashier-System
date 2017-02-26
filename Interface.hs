@@ -220,7 +220,7 @@ buy (Interface u dU dI c)
     newdU = Database.insert newu (User.getId newu) (Database.delete u dU)
     newdI = Database.insert newi (Item.getEan newi) (Database.delete (fst nC) dI)
     newi  = Item.removeFromStock 1 (fst nC)
-    newC  = (snd nC)
+    newC  = (Cart.cartUpdate newi (snd nC))
     newu  = User.removeWallet price (User.addSpent price u)
     price = Item.getPrice (fst nC)
     nC    = Cart.getFirst c
