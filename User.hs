@@ -34,7 +34,6 @@ setName x (User c i wallet spent a ) = User x i wallet spent a
 {- getName u
    PRE:  True
    POST: Returns the name of user u
-   SIDE EFFECTS: ... if any, including exceptions ...
    EXAMPLES: getName (User "test" 9 100 0 True)
               = "test"
 -}
@@ -60,7 +59,7 @@ getId :: User -> Id
 getId (User c i wallet spent a ) = i
 
 {- fillWallet w u
-   PRE:  True
+   PRE:  w must be a positive number.
    POST: Returns the user u with a wallet now containing w more currency
    SIDE EFFECTS: in case of a negative w we return an error.
    EXAMPLES: fillWallet 100 (User "test" 9 100 0 True)
@@ -72,9 +71,9 @@ fillWallet x (User c i wallet spent a )
   | otherwise = error "You can't fill with negative currency"
 
 {- removeWallet w u
-   PRE:  True
+   PRE: w can't be larger than the wallet in user
+        w can't be a negative number
    POST: Returns the user u with a wallet now containing w less currency
-   SIDE EFFECTS: in case of w being larger that what user aldready has. or if w is negative.
    EXAMPLES: removeWallet 70 (User "test" 9 100 0 True)
               = (User "test" 9 30 0 True)
 -}
@@ -103,7 +102,7 @@ getWallet :: User -> Wallet
 getWallet (User c i wallet spent a ) = wallet
 
 {- addSpent s u
-   PRE:  True
+   PRE:  s can't be a negative number
    POST: returns the user u with its (orignal spent value + s)
    EXAMPLES: addSpent 100 (User "test" 9 100 0 True)
               = (User "test" 9 100 100 True)
@@ -114,11 +113,9 @@ addSpent x (User c i wallet spent a)
   | x < 0 = error "The value must be greater than zero"
 
 {- reduceSpent s u
-   PRE:  True
+   PRE:  s can't be a negative number
+         s can't be larger than the user has spent
    POST: Returns the user u with its (original spent value - s)
-   SIDE EFFECTS:
-   if s is larger than what the user already spent you get an error.
-   if s is lesser than 0 we also get an error.
    EXAMPLES: reduceSpent 100 (User "test" 9 100 1000 True)
               = (User "test" 9 100 900 True)
 -}
