@@ -15,6 +15,7 @@ empty = []
 {- addToCart i c
    PRE:  True
    POST: returns a new cart that now also containing the item i
+   EXAMPLE: (createItem)
 -}
 addToCart :: Item -> Cart -> Cart
 addToCart i c = [i] ++ c
@@ -22,6 +23,7 @@ addToCart i c = [i] ++ c
 {- removeFromCart i c
    PRE:  i exists in c
    POST: Returns the new cart but now without i in it.
+   SIDE EFFECTS: Crashes if precondition is violated and shows a error message.
 -}
 removeFromCart :: Item -> Cart -> Cart
 removeFromCart i [] = error "non existing product"
@@ -39,6 +41,7 @@ removeFromCartAUX i (c:cs) newC
 {- getFirst
    PRE:  Cart is not empty
    POST: Returns a tuple with the first item and the remaining Cart
+   SIDE EFFECTS: Crashes if precondition is violated and shows a error message.
 -}
 getFirst :: Cart -> (Item,Cart)
 getFirst [] = error "no items in Cart"
