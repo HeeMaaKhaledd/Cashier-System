@@ -45,9 +45,6 @@ testInterface = newInterface a b c d
     d = Cart.addToCart (Item.createItem "cola" 193 10 10) Cart.empty
 
 -- END OF DATASTRUCTURES
-empty :: Interface
-empty = newInterface User.empty Database.empty Database.empty Cart.empty
-
 -- Functions to grab information from our Interface datastructure!
 {- newInterface a b c d
    PRE:  True
