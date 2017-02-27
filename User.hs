@@ -17,7 +17,7 @@ type IsAdmin = Bool
 
    REPRESENTATION INVARIANT: Wallet & Spent can not be a negative number!
  -}
-data User = Void | User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
+data User = User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
 
 empty :: User
 empty = Void
