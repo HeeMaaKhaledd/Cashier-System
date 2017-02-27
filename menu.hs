@@ -160,7 +160,7 @@ adminUserMenu i message = do
 
 runAdminUserMenu c i
   | c == 1 = do
-    putStrLn "Write name of the new user nd hit endet"
+    putStrLn "Write name of the new user and hit ENTER"
     name <- getLine
     putStrLn ""
     putStrLn "Write id of the new user and hit ENTER"
@@ -171,7 +171,7 @@ runAdminUserMenu c i
     wallet <- getLine
     if (not (Interface.checkIfOnlyInt wallet)) then adminUserMenu i "Your wallet amount was not valid... Try again"
       else putStrLn ""
-    putStrLn "Write adminstatus of the new user and hit enter"
+    putStrLn "Write adminstatus of the new user and hit ENTER"
     status <- getLine
     if (not (Interface.checkIfBool status)) then adminUserMenu i "You did not give a correct adminstatus (True or False)... Try again"
       else adminUserMenu (Interface.createUser name (read userId :: Int) (read wallet :: Int) (0) (read status :: Bool) i) "Created User"
@@ -223,14 +223,14 @@ adminChangeUserMenu i message u = do
 
 runAdminChangeUserMenu c i u
   | c == 1 = do
-    putStrLn "Write the name you want this user to have and hit enter"
+    putStrLn "Write the name you want this user to have and hit ENTER"
     name <- getLine
     let
       k = Interface.setUserName name u i
       in adminChangeUserMenu k "changed name" (Interface.getUser k)
 
   | c == 2 = do
-    putStrLn "Write the id you want this user to have and hit enter"
+    putStrLn "Write the id you want this user to have and hit ENTER"
     userId <- getLine
     if Interface.checkIfOnlyInt userId then
       let k = Interface.setUserId (read userId :: Int) u i
@@ -238,7 +238,7 @@ runAdminChangeUserMenu c i u
       else adminChangeUserMenu i "Not a valid userId! Try again." u
 
   | c == 3 = do
-    putStrLn "Write the amount you want to add for this users wallet and hit enter"
+    putStrLn "Write the amount you want to add for this users wallet and hit ENTER"
     amount <- getLine
     if Interface.checkIfOnlyInt amount then
       let
@@ -247,7 +247,7 @@ runAdminChangeUserMenu c i u
       else adminChangeUserMenu i "Not a valid amount! Try again." u
 
   | c == 4 = do
-    putStrLn "Write the amount you want to remove for this users wallet and hit enter"
+    putStrLn "Write the amount you want to remove for this users wallet and hit ENTER"
     amount <- getLine
     if Interface.checkIfOnlyInt amount then
       let
@@ -369,14 +369,14 @@ adminChangeItemMenu i message item = do
 
 runAdminChangeItemMenu c i item
   | c == 1 = do
-    putStrLn "Write the name you want this item to have and hit enter"
+    putStrLn "Write the name you want this item to have and hit ENTER"
     name <- getLine
     let
       k = Interface.setItemName name item i
       in adminChangeItemMenu k "changed name" (Interface.findItem (Interface.getItemEan item) k)
 
   | c == 2 = do
-    putStrLn "Write the ean you want this item to have and hit enter"
+    putStrLn "Write the ean you want this item to have and hit ENTER"
     ean <- getLine
     if Interface.checkIfOnlyInt ean then
       let k = Interface.setItemEan (read ean :: Int) item i
@@ -384,7 +384,7 @@ runAdminChangeItemMenu c i item
       else adminChangeItemMenu i "Not a valid ean! Try again." item
 
   | c == 3 = do
-    putStrLn "Write the price you want this item to have and hit enter"
+    putStrLn "Write the price you want this item to have and hit ENTER"
     price <- getLine
     if Interface.checkIfOnlyInt price then
       let k = Interface.setItemPrice (read price :: Int) item i
@@ -392,7 +392,7 @@ runAdminChangeItemMenu c i item
       else adminChangeItemMenu i "Not a valid price! Try again." item
 
   | c == 4 = do
-    putStrLn "Write the amount you want this item to add to its stock and hit enter"
+    putStrLn "Write the amount you want this item to add to its stock and hit ENTER"
     amount <- getLine
     if Interface.checkIfOnlyInt amount then
       let k = Interface.addToStock (read amount :: Int) item i
@@ -400,7 +400,7 @@ runAdminChangeItemMenu c i item
       else adminChangeItemMenu i "Not a valid amount! Try again." item
 
   | c == 5 = do
-    putStrLn "Write the amount you want this item to remove from its stock and hit enter"
+    putStrLn "Write the amount you want this item to remove from its stock and hit ENTER"
     amount <- getLine
     if Interface.checkIfOnlyInt amount then
       let k = Interface.removeFromStock (read amount :: Int) item i
@@ -408,7 +408,7 @@ runAdminChangeItemMenu c i item
       else adminChangeItemMenu i "Not a valid amount! Try again." item
 
   | c == 6 = do
-    putStrLn "Write the amount you want this item to have in stock and hit enter"
+    putStrLn "Write the amount you want this item to have in stock and hit ENTER"
     amount <- getLine
     if Interface.checkIfOnlyInt amount then
       let k = Interface.replaceStock (read amount :: Int) item i
