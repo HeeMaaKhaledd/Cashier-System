@@ -48,21 +48,21 @@ bajs = newInterface a b c d
 newInterface :: User -> Database User -> Database Item -> Cart -> Interface
 newInterface a b c d = Interface a b c d
 
-{- getUser
+{- getUser (Interface u dU dI c)
    PRE:  True
    POST: finds a user based on the information from the interface data type.
    INVARIANT: returns an error if the user is not in the database.
 -}
 getUser :: Interface -> User
 getUser (Interface u dU dI c) = u
-{- getCart
+{- getCart (Interface u dU dI c)
    PRE:  True
    POST: finds a cart based on the information put in by the user in the interface.
    INVARIANT: returns an error if information doesn't exist or isn't in the database.
 -}
 getCart :: Interface -> Cart
 getCart (Interface u dU dI c) = c
-{- getDatabaseItem
+{- getDatabaseItem (Interface u dU dI c)
    PRE:  True
    POST: finds an item based on the information put in by the user in the interface.
    INVARIANT: returns an error if information of item doesn't exist or isn't in the database.
@@ -70,7 +70,7 @@ getCart (Interface u dU dI c) = c
 getDatabaseItem :: Interface -> Database Item
 getDatabaseItem (Interface u dU dI c) = dI
 
-{- getDatabaseUser
+{- getDatabaseUser (Interface u dU dI c)
    PRE:  True
    POST: finds a user based on the information put in by the user in the interface.
    INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
@@ -79,24 +79,35 @@ getDatabaseUser :: Interface -> Database User
 getDatabaseUser (Interface u dU dI c) = dU
 
 -- user handling
-{- getDatabaseUser
+{- createUser name iD wallet spent admin (Interface u dU dI c)
    PRE:  True
-   POST: creates a new user based in name, identification number, wallet, money spent,  
-   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
+   POST: creates a new user based in name, identification number, wallet, money spent, and information about users properties.
 -}
 createUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> Interface -> Interface
 createUser name iD wallet spent admin (Interface u dU dI c) = Interface u newdb dI c
   where newdb = Database.insert (User.newUser name iD wallet spent admin) iD dU
 
+{- removeUser
+   PRE:  True user (Interface u dU dI c)
+   POST: removes a user based on the information put in by the user in the interface.
+   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
+-}
 removeUser :: User -> Interface -> Interface
 removeUser user (Interface u dU dI c) = Interface u newdb dI c
   where newdb = Database.delete user dU
-
+{- findUser iD (Interface u dU dI c)
+   PRE:  True
+   POST: Finds a user based on the identification numbers put in by the user in the interface.
+   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
+-}
 findUser :: Id -> Interface -> User
 findUser iD (Interface u dU dI c) = Database.grabWithId iD dU
 
 -- uppdate user
-
+{- setUserName name user (Interface u dU dI c)
+   PRE:  True
+   POST: sets name of a user based on the information put in by the user in the interface.
+-}
 setUserName :: Name -> User -> Interface -> Interface
 setUserName name user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
@@ -106,9 +117,18 @@ setUserName name user (Interface u dU dI c)
       j = User.setName name user
       k = User.getId user
 
+{- getUserName a
+   PRE:  True
+   POST: gets name of a user based on the information put in by the user in the interface.
+   INVARIANT: returns an error if information of name doesn't exist in the database.
+-}
 getUserName :: User -> Name
 getUserName a = User.getName a
-
+{- setUserId iD user (Interface u dU dI c)
+   PRE:  True
+   POST: sets ID of a user based on the information put in by the user in the interface.
+   INVARIANT: returns an error if information of User doesn't exist in the database.
+-}
 setUserId :: Id -> User -> Interface -> Interface
 setUserId iD user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
@@ -116,10 +136,18 @@ setUserId iD user (Interface u dU dI c)
     where
       newdb = Database.insert j iD (Database.delete user dU)
       j = User.setId iD user
-
+{- getUserAdmin (Interface u dU dI c)
+   PRE:  True
+   POST: gets information about a users properties based on the information put in by the user in the interface. Either returns true or false, depending if the user is admin
+   INVARIANT: returns an error if information of User doesn't exist in the database.
+-}
 getUserAdmin :: Interface -> Bool
 getUserAdmin (Interface u dU dI c) = User.getAdminStatus u
-
+{- makeUserAdmin user (Interface u dU dI c)
+   PRE:  True
+   POST: makes user properties admin if user information matches with information put in by the user.
+   INVARIANT: returns an error if information of User doesn't exist in the database.
+-}
 makeUserAdmin:: User -> Interface -> Interface
 makeUserAdmin user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
@@ -128,7 +156,11 @@ makeUserAdmin user (Interface u dU dI c)
       newdb = Database.insert j k (Database.delete user dU)
       j = User.makeAdmin user
       k = User.getId user
-
+{- removeUserAdmin user (Interface u dU dI c)
+   PRE:  True
+   POST: changes or reduces user properties from admin to customer if user information matches with information put in by the user.
+   INVARIANT: returns an error if information of User doesn't exist in the database.
+-}
 removeUserAdmin:: User -> Interface -> Interface
 removeUserAdmin user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
@@ -139,9 +171,17 @@ removeUserAdmin user (Interface u dU dI c)
       k = User.getId user
 
 -- wallet
+{- getWallet user (Interface u dU dI c)
+   PRE:  True
+   POST: gets information about users wallet.
+-}
 getWallet :: User -> Interface -> Wallet
 getWallet user (Interface u dU dI c) = User.getWallet user
 
+{- fillWallet amount user (Interface u dU dI c)
+   PRE:  True
+   POST: Adds value of users disposable money in the system
+-}
 fillWallet :: Int -> User -> Interface -> Interface
 fillWallet amount user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
@@ -151,6 +191,10 @@ fillWallet amount user (Interface u dU dI c)
       j = User.fillWallet amount user
       k = User.getId user
 
+{- reduceWallet amount user (Interface u dU dI c)
+   PRE:  True
+   POST: reduces value of users disposable money in the system
+-}
 reduceWallet :: Int -> User -> Interface -> Interface
 reduceWallet amount user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
@@ -160,6 +204,10 @@ reduceWallet amount user (Interface u dU dI c)
       j = User.removeWallet amount user
       k = User.getId user
 
+{- clearWallet user (Interface u dU dI c)
+   PRE:  True
+   POST: clears value to a 0 in wallet of users disposable money in the system
+-}
 clearWallet :: User -> Interface -> Interface
 clearWallet user (Interface u dU dI c)
   | user == u = Interface j newdb dI c
@@ -170,56 +218,87 @@ clearWallet user (Interface u dU dI c)
       k = User.getId user
 
 -- item handling
-
+{- createItem name ean price stock (Interface u dU dI c)
+   PRE:  True
+   POST: creates an item in the database based on information put in by the user.
+-}
 createItem :: Name -> Ean -> Price -> Stock -> Interface -> Interface
 createItem name ean price stock (Interface u dU dI c) = Interface u dU newdb c
   where newdb = Database.insert (Item.createItem name ean price stock) ean dI
-
+{- removeItem i (Interface u dU dI c)
+   PRE:  True
+   POST: removes an item in the database based on information put in by the user.
+-}
 removeItem :: Item -> Interface -> Interface
 removeItem i (Interface u dU dI c) = Interface u dU newdb c
   where newdb = Database.delete i dI
-
+{- setItemName name item (Interface u dU dI c)
+   PRE:  True
+   POST: Sets an items name based on information put in by the user.
+-}
 setItemName :: Name -> Item -> Interface -> Interface
 setItemName name item (Interface u dU dI c) = Interface u dU newdb c
     where
       newdb = Database.insert j k (Database.delete item dI)
       j = Item.setName name item
       k = Item.getEan item
-
+{- getItemEan i
+   PRE:  True
+   POST: gets an items identification code the based on information put in by the user.
+-}
 getItemEan :: Item -> Ean
 getItemEan i = Item.getEan i
-
+{- setItemEan ean item (Interface u dU dI c)
+   PRE:  True
+   POST: sets an items identification code the based on information put in by the user.
+-}
 setItemEan :: Ean -> Item -> Interface -> Interface
 setItemEan ean item (Interface u dU dI c) = Interface u dU newdb c
     where
       newdb = Database.insert j ean (Database.delete item dI)
       j = Item.setEan ean item
-
+{- setItemPrice price item (Interface u dU dI c)
+   PRE:  True
+   POST: sets an items price the based on information put in by the user.
+-}
 setItemPrice :: Price -> Item -> Interface -> Interface
 setItemPrice price item (Interface u dU dI c) = Interface u dU newdb c
   where
     newdb = Database.insert j k (Database.delete item dI)
     j = Item.setPrice price item
     k = Item.getEan item
-
+{- findItem ean (Interface u dU dI c)
+   PRE:  True
+   POST: gets an items information based on identification code put in by the user.
+-}
 findItem :: Ean -> Interface -> Item
 findItem ean (Interface u dU dI c) = Database.grabWithId ean dI
 
 -- stock handling
+{- addToStock i item (Interface u dU dI c)
+   PRE:  True
+   POST: adds value to an items stock based on information put in by the user.
+-}
 addToStock :: Int -> Item -> Interface -> Interface
 addToStock i item (Interface u dU dI c) = Interface u dU newdb c
   where
     newdb = Database.insert j k (Database.delete item dI)
     j = Item.addToStock i item
     k = Item.getEan item
-
+{- removeFromStock i item (Interface u dU dI c)
+   PRE:  True
+   POST: reduces value from an items stock based on information put in by the user.
+-}
 removeFromStock :: Int -> Item -> Interface -> Interface
 removeFromStock i item (Interface u dU dI c) = Interface u dU newdb c
   where
     newdb = Database.insert j k (Database.delete item dI)
     j = Item.removeFromStock i item
     k = Item.getEan item
-
+{- replaceStock i item (Interface u dU dI c)
+   PRE:  True
+   POST: replaces value from an items stock based on information put in by the user.
+-}
 replaceStock :: Int -> Item -> Interface -> Interface
 replaceStock i item (Interface u dU dI c) = Interface u dU newdb c
   where
@@ -228,16 +307,30 @@ replaceStock i item (Interface u dU dI c) = Interface u dU newdb c
     k = Item.getEan item
 
 -- Cart Handling
-
+{- addToCart i (Interface u dU dI c)
+   PRE:  True
+   POST: returns an updated cart that now also containing a new item
+-}
 addToCart :: Item -> Interface -> Interface
 addToCart item (Interface u dU dI c) = Interface u dU dI (Cart.addToCart item c)
-
+{- removeFromCart i (Interface u dU dI c)
+   PRE:  True
+   POST: removes an item from the cart
+-}
 removeFromCart :: Item -> Interface -> Interface
 removeFromCart item (Interface u dU dI c) = Interface u dU dI (Cart.removeFromCart item c)
-
+{- calculateCartPrice (Interface u dU dI c)
+   PRE:  True
+   POST: deletes an item from the cart based on the information put in by the user.
+-}
 calculateCartPrice :: Interface -> Price
 calculateCartPrice (Interface u dU dI c) = Cart.calculatePrice c
 
+{- buy (Interface u dU dI c)
+   PRE:  True
+   POST: purchases the content of the cart based on the information put in by the user.
+   VARIANT: Length of c
+-}
 buy :: Interface -> Interface
 buy (Interface u dU dI c)
   | c == Cart.empty = Interface u dU dI c

@@ -15,7 +15,7 @@ empty = []
 
 {- addToCart i c
    PRE:  True
-   POST: returns a new cart that now also containing the item i
+   POST: returns a new cart that now also containing a new item
 -}
 addToCart :: Item -> Cart -> Cart
 addToCart i c = [i] ++ c
