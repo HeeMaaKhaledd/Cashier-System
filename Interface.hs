@@ -5,7 +5,7 @@ module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUs
                   Interface.clearWallet,Interface.createItem,removeItem,findItem,
                   Interface.addToStock,Interface.removeFromStock,Interface.replaceStock,
                   Interface.addToCart,Interface.removeFromCart,
-                  buy,bajs,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,
+                  buy,testInterface,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,
                   Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,
                   Interface.calculateCartPrice,Interface.getDatabaseUser,
                   Check.checkIfOnlyInt,Check.checkIfBool, Interface.getUserName) where
@@ -31,7 +31,7 @@ type IsAdmin  = Bool
 data Interface = Interface User (Database User) (Database Item) Cart deriving (Show,Eq)
 
 --testing interface ..
-bajs = newInterface a b c d
+testInterface = newInterface a b c d
   where
     a = (User.newUser "sebbe" 12 100 0 True)
     b = [((User.newUser "sebbe" 12 100 0 True),12),((User.newUser "grimmi" 11 100 0 True),11)]
@@ -81,7 +81,7 @@ getDatabaseUser (Interface u dU dI c) = dU
 -- user handling
 {- getDatabaseUser
    PRE:  True
-   POST: creates a new user based in name, identification number, wallet, money spent,  
+   POST: creates a new user based in name, identification number, wallet, money spent,
    INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
 -}
 createUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> Interface -> Interface
