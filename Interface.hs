@@ -41,23 +41,49 @@ bajs = newInterface a b c d
 -- END OF DATASTRUCTURES
 
 -- Functions to grab information from our Interface datastructure!
+{- newInterface a b c d
+   PRE:  True
+   POST: returns the full interface.
+-}
 newInterface :: User -> Database User -> Database Item -> Cart -> Interface
 newInterface a b c d = Interface a b c d
 
+{- getUser
+   PRE:  True
+   POST: finds a user based on the information from the interface data type.
+   INVARIANT: returns an error if the user is not in the database.
+-}
 getUser :: Interface -> User
 getUser (Interface u dU dI c) = u
-
+{- getCart
+   PRE:  True
+   POST: finds a cart based on the information put in by the user in the interface.
+   INVARIANT: returns an error if information doesn't exist or isn't in the database.
+-}
 getCart :: Interface -> Cart
 getCart (Interface u dU dI c) = c
-
+{- getDatabaseItem
+   PRE:  True
+   POST: finds an item based on the information put in by the user in the interface.
+   INVARIANT: returns an error if information of item doesn't exist or isn't in the database.
+-}
 getDatabaseItem :: Interface -> Database Item
 getDatabaseItem (Interface u dU dI c) = dI
 
+{- getDatabaseUser
+   PRE:  True
+   POST: finds a user based on the information put in by the user in the interface.
+   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
+-}
 getDatabaseUser :: Interface -> Database User
 getDatabaseUser (Interface u dU dI c) = dU
 
 -- user handling
-
+{- getDatabaseUser
+   PRE:  True
+   POST: creates a new user based in name, identification number, wallet, money spent,  
+   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
+-}
 createUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> Interface -> Interface
 createUser name iD wallet spent admin (Interface u dU dI c) = Interface u newdb dI c
   where newdb = Database.insert (User.newUser name iD wallet spent admin) iD dU
