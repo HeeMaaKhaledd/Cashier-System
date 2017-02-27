@@ -1,11 +1,30 @@
 import Interface
+import Importer
 import System.Process
+
+generateInterface = createDBItem itemList dbUser
+  where
+    dbUser    = createDBUser userList
+
+
+userList = createOneList $ splitIntoParts . grabLines "DBUser.txt"
+itemList = createOneList $ splitIntoParts . grabLines "DBItem.txt"
+
+createDBItem s otherInterface = createDBItemAUX s otherInterface
+
+createDBItemAUX [] k = k
+createDBItemAUX (a:b:c:d:xs) k = createDBItemAUX xs (Interface.createItem a (read b :: Int) (read c :: Int) (read d :: Int) k)
+
+createDBUser s = createDBUserAUX s Interface.empty
+
+createDBUserAUX [] k = k
+createDBUserAUX (a:b:c:d:e:xs) k = createDBUserAUX xs (Interface.createUser a (read b :: Int) (read c :: Int) (read d :: Int) (read e :: Bool) k)
 
 main :: IO()
 main = do
     menu k ("Welcome " ++ (Interface.getUserName (Interface.getUser k)))
       where k = testInterface
-      
+
 menu :: Interface -> String -> IO()
 menu i message = do
   system "clear"
@@ -322,7 +341,7 @@ runAdminItemMenu c i
     price <- getLine
     if (not (Interface.checkIfOnlyInt price)) then adminItemMenu i "Not a valid price! Try again."
       else putStrLn ""
-    putStrLn "Write stock of the new iten and hit ENTER"
+    putStrLn "Write stock of the new item and hit ENTER"
     stock <- getLine
     if (not (Interface.checkIfOnlyInt stock)) then adminItemMenu i "Not a valid stock amount! Try again."
       else adminItemMenu (Interface.createItem name (read ean :: Int) (read price :: Int) (read stock :: Int) i) "Created item"
