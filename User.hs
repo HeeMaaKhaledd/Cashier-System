@@ -1,7 +1,7 @@
 -- improving readability of code.
 module User(User,setName,setId,getId,fillWallet,
             removeWallet,clearWallet,getWallet,
-            addSpent,removeSpent,makeAdmin,removeAdmin,newUser, getAdminStatus, getName, empty) where
+            addSpent,removeSpent,makeAdmin,removeAdmin,newUser, getAdminStatus, getName) where
 
 import Test.HUnit
 
