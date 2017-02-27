@@ -1,24 +1,29 @@
 import Interface
-import Importer
+--import Importer
+import Data.Text.Internal
 import System.Process
+import Data.List.Split
+import Data.Text as Text
+import Data.Text.IO as Text
 
-generateInterface = createDBItem itemList dbUser
-  where
-    dbUser    = createDBUser userList
-
-
-userList = createOneList $ splitIntoParts . grabLines "DBUser.txt"
-itemList = createOneList $ splitIntoParts . grabLines "DBItem.txt"
-
-createDBItem s otherInterface = createDBItemAUX s otherInterface
-
-createDBItemAUX [] k = k
-createDBItemAUX (a:b:c:d:xs) k = createDBItemAUX xs (Interface.createItem a (read b :: Int) (read c :: Int) (read d :: Int) k)
-
-createDBUser s = createDBUserAUX s Interface.empty
-
-createDBUserAUX [] k = k
-createDBUserAUX (a:b:c:d:e:xs) k = createDBUserAUX xs (Interface.createUser a (read b :: Int) (read c :: Int) (read d :: Int) (read e :: Bool) k)
+-- generateInterface = createDBItem itemList dbUser
+--   where
+--     dbUser    = createDBUser userList
+--
+-- grabLines tf = fmap Text.lines (Text.readFile tf)
+--
+-- convertToString ns = fmap unpack ns
+-- -- itemList = createOneList . splitIntoParts . grabLines "DBItem.txt"
+--
+-- createDBItem s otherInterface = createDBItemAUX s otherInterface
+--
+-- createDBItemAUX [] k = k
+-- createDBItemAUX (a:b:c:d:xs) k = createDBItemAUX xs (Interface.createItem a (read b :: Int) (read c :: Int) (read d :: Int) k)
+--
+-- createDBUser s = createDBUserAUX s Interface.empty
+--
+-- createDBUserAUX [] k = k
+-- createDBUserAUX (a:b:c:d:e:xs) k = createDBUserAUX xs (Interface.createUser a (read b :: Int) (read c :: Int) (read d :: Int) (read e :: Bool) k)
 
 main :: IO()
 main = do
