@@ -80,6 +80,7 @@ getPrice (Item name ean price stock) = price
 {- addToStock x i
    PRE:  True
    POST: adding x to the stock value
+   SIDE EFFECTS: Crashes if precondition is violated and shows a error message.
    EXAMPLES:addToStock 1237 (createItem "test" 1000101 35 100)
           = Item "test" 1000101 35 1337)
 -}
@@ -91,6 +92,7 @@ addToStock x (Item name ean price stock)
  {- removeFromStock x i
     PRE: x can't be larger than items stockvalue.
     POST: subtracting the stock value with x.
+    SIDE EFFECTS: Crashes if precondition is violated and shows a error message.
     EXAMPLES:removeFromStock 88 (createItem "test" 1000101 35 100)
             = Item "test" 1000101 35 12
  -}
