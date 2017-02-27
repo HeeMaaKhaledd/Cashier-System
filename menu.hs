@@ -3,7 +3,7 @@ import System.Process
 
 main = do
     menu k ("Welcome " ++ (Interface.getUserName (Interface.getUser k)))
-      where k = bajs
+      where k = testInterface
 
 menu i message = do
   system "clear"
