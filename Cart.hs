@@ -47,12 +47,25 @@ getFirst :: Cart -> (Item,Cart)
 getFirst [] = error "no items in Cart"
 getFirst (c:cs) = (c,cs)
 
+{- calculatePrice
+   PRE:  True
+   POST: Returns sum of cart in integers, representing Price.
+-}
+
 calculatePrice :: Cart -> Price
 calculatePrice c = sum (map Item.getPrice c)
 
+{- cartUpdate i c
+   PRE:  True
+   POST: calls an updated cart of items that checks for doublets in the system.
+-}
 cartUpdate :: Item -> Cart -> Cart
 cartUpdate i c = cartUpdateAUX i c Cart.empty
 
+{- cartUpdateAUX i (c:cs) newC
+   PRE:  True
+   POST: calls a cart of items and if there are doublets of a product, it adds an item to an updated cart with reduced items stock.
+-}
 cartUpdateAUX :: Item -> Cart -> Cart -> Cart
 cartUpdateAUX i [] newC     = newC
 cartUpdateAUX i (c:cs) newC
