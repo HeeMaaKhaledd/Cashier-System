@@ -8,7 +8,7 @@ module Interface(Interface,User,Item,Cart,Database,newInterface,getUser,createUs
                   buy,testInterface,getCart,getDatabaseItem, Interface.getUserAdmin,Interface.setItemEan,
                   Interface.setItemName,Interface.setItemPrice,Interface.getItemEan,
                   Interface.calculateCartPrice,Interface.getDatabaseUser,
-                  Check.checkIfOnlyInt,Check.checkIfBool, Interface.getUserName, Interface.empty) where
+                  Check.checkIfOnlyInt,Check.checkIfBool, Interface.getUserName) where
 
 import Check
 import Item
