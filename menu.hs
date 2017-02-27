@@ -5,6 +5,7 @@ main :: IO()
 main = do
     menu k ("Welcome " ++ (Interface.getUserName (Interface.getUser k)))
       where k = testInterface
+      
 menu :: Interface -> String -> IO()
 menu i message = do
   system "clear"
