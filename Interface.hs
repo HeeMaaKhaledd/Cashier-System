@@ -28,6 +28,12 @@ type Wallet   = Int
 type Spent    = Int
 type IsAdmin  = Bool
 
+{- REPRESENTATION CONVENTION: Interface holds 4 arguments, User, (Database User), (Database Item) and Cart
+      User holds the current User, Database User holds every user in our database ,
+      Database Item hold every item in our shop and Cart holds the current cart!
+
+   REPRESENTATION INVARIANT: User must be a user inside Database User
+ -}
 data Interface = Interface User (Database User) (Database Item) Cart deriving (Show,Eq)
 
 --testing interface ..
