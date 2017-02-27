@@ -51,21 +51,20 @@ newInterface a b c d = Interface a b c d
 {- getUser (Interface u dU dI c)
    PRE:  True
    POST: finds a user based on the information from the interface data type.
-   INVARIANT: returns an error if the user is not in the database.
+
 -}
 getUser :: Interface -> User
 getUser (Interface u dU dI c) = u
 {- getCart (Interface u dU dI c)
    PRE:  True
    POST: finds a cart based on the information put in by the user in the interface.
-   INVARIANT: returns an error if information doesn't exist or isn't in the database.
+
 -}
 getCart :: Interface -> Cart
 getCart (Interface u dU dI c) = c
 {- getDatabaseItem (Interface u dU dI c)
    PRE:  True
    POST: finds an item based on the information put in by the user in the interface.
-   INVARIANT: returns an error if information of item doesn't exist or isn't in the database.
 -}
 getDatabaseItem :: Interface -> Database Item
 getDatabaseItem (Interface u dU dI c) = dI
@@ -73,7 +72,6 @@ getDatabaseItem (Interface u dU dI c) = dI
 {- getDatabaseUser (Interface u dU dI c)
    PRE:  True
    POST: finds a user based on the information put in by the user in the interface.
-   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
 -}
 getDatabaseUser :: Interface -> Database User
 getDatabaseUser (Interface u dU dI c) = dU
@@ -82,7 +80,6 @@ getDatabaseUser (Interface u dU dI c) = dU
 {- createUser name iD wallet spent admin (Interface u dU dI c)
    PRE:  True
    POST: creates a new user based in name, identification number, wallet, money spent,
-   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
 -}
 createUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> Interface -> Interface
 createUser name iD wallet spent admin (Interface u dU dI c) = Interface u newdb dI c
@@ -91,7 +88,6 @@ createUser name iD wallet spent admin (Interface u dU dI c) = Interface u newdb 
 {- removeUser
    PRE:  True user (Interface u dU dI c)
    POST: removes a user based on the information put in by the user in the interface.
-   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
 -}
 removeUser :: User -> Interface -> Interface
 removeUser user (Interface u dU dI c) = Interface u newdb dI c
@@ -99,7 +95,6 @@ removeUser user (Interface u dU dI c) = Interface u newdb dI c
 {- findUser iD (Interface u dU dI c)
    PRE:  True
    POST: Finds a user based on the identification numbers put in by the user in the interface.
-   INVARIANT: returns an error if information of user doesn't exist or isn't in the database.
 -}
 findUser :: Id -> Interface -> User
 findUser iD (Interface u dU dI c) = Database.grabWithId iD dU
@@ -121,14 +116,12 @@ setUserName name user (Interface u dU dI c)
 {- getUserName a
    PRE:  True
    POST: gets name of a user based on the information put in by the user in the interface.
-   INVARIANT: returns an error if information of name doesn't exist in the database.
 -}
 getUserName :: User -> Name
 getUserName a = User.getName a
 {- setUserId iD user (Interface u dU dI c)
    PRE:  True
    POST: sets ID of a user based on the information put in by the user in the interface.
-   INVARIANT: returns an error if information of User doesn't exist in the database.
 -}
 setUserId :: Id -> User -> Interface -> Interface
 setUserId iD user (Interface u dU dI c)
@@ -140,14 +133,12 @@ setUserId iD user (Interface u dU dI c)
 {- getUserAdmin (Interface u dU dI c)
    PRE:  True
    POST: gets information about a users properties based on the information put in by the user in the interface. Either returns true or false, depending if the user is admin
-   INVARIANT: returns an error if information of User doesn't exist in the database.
 -}
 getUserAdmin :: Interface -> Bool
 getUserAdmin (Interface u dU dI c) = User.getAdminStatus u
 {- makeUserAdmin user (Interface u dU dI c)
    PRE:  True
    POST: makes user properties admin if user information matches with information put in by the user.
-   INVARIANT: returns an error if information of User doesn't exist in the database.
 -}
 makeUserAdmin:: User -> Interface -> Interface
 makeUserAdmin user (Interface u dU dI c)
@@ -160,7 +151,6 @@ makeUserAdmin user (Interface u dU dI c)
 {- removeUserAdmin user (Interface u dU dI c)
    PRE:  True
    POST: changes or reduces user properties from admin to customer if user information matches with information put in by the user.
-   INVARIANT: returns an error if information of User doesn't exist in the database.
 -}
 removeUserAdmin:: User -> Interface -> Interface
 removeUserAdmin user (Interface u dU dI c)
