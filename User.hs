@@ -11,6 +11,12 @@ type Wallet = Int
 type Spent = Int
 type IsAdmin = Bool
 
+{- REPRESENTATION CONVENTION: User holds 5 arguments Name, Id, Wallet, Spent, IsAdmin
+      Name represents the users name, Id the users Id, Wallet the users Wallet,
+      Spent how much the user have spent and IsAdmin the status if the user is a admin or not.
+
+   REPRESENTATION INVARIANT: Wallet & Spent can not be a negative number!
+ -}
 data User = User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
 
 {- newUser a b c d e
@@ -59,7 +65,7 @@ getId :: User -> Id
 getId (User c i wallet spent a ) = i
 
 {- fillWallet w u
-   PRE:  w must be a positive number.
+   PRE:  True
    POST: Returns the user u with a wallet now containing w more currency
    SIDE EFFECTS: in case of a negative w we return an error.
    EXAMPLES: fillWallet 100 (User "test" 9 100 0 True)
@@ -72,7 +78,6 @@ fillWallet x (User c i wallet spent a )
 
 {- removeWallet w u
    PRE: w can't be larger than the wallet in user
-        w can't be a negative number
    POST: Returns the user u with a wallet now containing w less currency
    EXAMPLES: removeWallet 70 (User "test" 9 100 0 True)
               = (User "test" 9 30 0 True)
@@ -102,7 +107,7 @@ getWallet :: User -> Wallet
 getWallet (User c i wallet spent a ) = wallet
 
 {- addSpent s u
-   PRE:  s can't be a negative number
+   PRE:  True
    POST: returns the user u with its (orignal spent value + s)
    EXAMPLES: addSpent 100 (User "test" 9 100 0 True)
               = (User "test" 9 100 100 True)
@@ -113,8 +118,8 @@ addSpent x (User c i wallet spent a)
   | x < 0 = error "The value must be greater than zero"
 
 {- reduceSpent s u
-   PRE:  s can't be a negative number
-         s can't be larger than the user has spent
+   PRE:  True
+         s can't be larger than the user has already spent
    POST: Returns the user u with its (original spent value - s)
    EXAMPLES: reduceSpent 100 (User "test" 9 100 1000 True)
               = (User "test" 9 100 900 True)
