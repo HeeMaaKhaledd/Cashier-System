@@ -198,9 +198,9 @@ Cart.hs is imported and makes the following functions reachable.\\
 empty :: Cart
 addToCart :: Item -> Cart -> Cart
 removeFromCart :: Item -> Cart -> Cart
-removeFromCartAUX :: Item -> Cart -> Cart -> Cart
 calculatePrice :: Cart -> Int
 getFirst :: Cart -> (Item,Cart)
+cartUpdate :: Item -> Cart -> Cart
 \end{lstlisting}
 All functions specified aims to make Cart edible for Users. The names of functions are relatively self explanatory. As mentioned in previous branch and data specifications, the types put in are contained among the first arrows, whilst the last output is specified last in each function. For specified code, please read attached file.
 \subsection{Interface}
