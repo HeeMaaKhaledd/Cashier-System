@@ -236,6 +236,11 @@ newInterface :: User -> Database User -> Database Item -> Cart -> Interface
 \end{lstlisting}
 new interface specifies what types the interface takes in the system. The system is as you can see built of the other branches, calling user, databases, cart and creates the interface. For specified code, please read attached file.
 \begin{lstlisting}
+getDatabaseItem :: Interface -> Database Item
+getDatabaseUser :: Interface -> Database User
+\end{lstlisting}
+The interface returns the databases it holds. For specified code, please read attached file.
+\begin{lstlisting}
 User administration
 getUser :: Interface -> User
 createUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> Interface -> Interface
@@ -245,19 +250,37 @@ findUser :: Id -> Interface -> User
 The user administration calls all the functions needed to handle users from the User branch. This way the interface simplifies the user administration as it is gathered and called with simple functions. For specified code, please read attached file.
 \begin{lstlisting}
 setUserName :: Name -> User -> Interface -> Interface
+getUserName :: User -> Name
 setUserId :: Id -> User -> Interface -> Interface
+getUserAdmin :: Interface -> Bool
 makeUserAdmin:: User -> Interface -> Interface
 removeUserAdmin:: User -> Interface -> Interface
 \end{lstlisting}
+\begin{lstlisting}
+Item administration
+findItem :: Ean -> Interface -> Item
+createItem :: Name -> Ean -> Price -> Stock -> Interface -> Interface
+removeItem :: Item -> Interface -> Interface
+\end{lstlisting}
+The item administration calls all the functions needed to handle items from the Item branch. This way the interface simplifies the user administration as it is gathered and called with simple functions. For specified code, please read attached file.
+\begin{lstlisting}
+setUserName :: Name -> User -> Interface -> Interface
+getUserName :: User -> Name
+setUserId :: Id -> User -> Interface -> Interface
+getUserAdmin :: Interface -> Bool
+makeUserAdmin:: User -> Interface -> Interface
+removeUserAdmin:: User -> Interface -> Interface
+\end{lstlisting}
+setItemName :: Name -> Item -> Interface -> Interface
+getItemEan :: Item -> Ean
+setItemEan :: Ean -> Item -> Interface -> Interface
+setItemPrice :: Price -> Item -> Interface -> Interface
 \begin{lstlisting}
 Wallet
 getWallet :: User -> Interface -> Wallet
 fillWallet :: Int -> User -> Interface -> Interface
 reduceWallet :: Int -> User -> Interface -> Interface
-clearWallet :: Int -> User -> Interface -> Interface
-createItem :: Name -> Ean -> Price -> Stock -> Interface -> Interface
-removeItem :: Item -> Interface -> Interface
-findItem :: Ean -> Interface -> Item
+clearWallet :: User -> Interface -> Interface
 \end{lstlisting}
 The interface calls all wallet functions that is needed to adjust or create wallet values. For specified code, please read attached file.
 \begin{lstlisting}
@@ -272,6 +295,8 @@ Cart Handling
 addToCart :: Item -> Interface -> Interface
 removeFromCart :: Item -> Interface -> Interface
 buy :: Interface -> Interface
+calculateCartPrice :: Interface -> Price
+getCart :: Interface -> Cart
 \end{lstlisting}
 The interface calls all cart functions that is needed to adjust or create temporary cart values.
 \subsubsection{Graphical interface}
