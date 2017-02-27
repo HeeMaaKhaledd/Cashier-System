@@ -1,6 +1,5 @@
 module Cart(Cart,Cart.empty,addToCart,removeFromCart,getFirst,calculatePrice,cartUpdate) where
 import Item
-import Database
 import Test.HUnit
 
 type Price = Int
@@ -21,9 +20,8 @@ addToCart :: Item -> Cart -> Cart
 addToCart i c = [i] ++ c
 
 {- removeFromCart i c
-   PRE:  True
+   PRE:  i exists in c
    POST: Returns the new cart but now without i in it.
-   SIDE EFFECTS: error if item is not in the list. ?? doublecheck
 -}
 removeFromCart :: Item -> Cart -> Cart
 removeFromCart i [] = error "non existing product"
@@ -39,9 +37,8 @@ removeFromCartAUX i (c:cs) newC
   | i /= c = removeFromCartAUX i cs (c:newC)
 
 {- getFirst
-   PRE:  True
+   PRE:  Cart is not empty
    POST: Returns a tuple with the first item and the remaining Cart
-   SIDE EFFECTS: returns a error if cart is empty -- check how to write Side Effects
 -}
 getFirst :: Cart -> (Item,Cart)
 getFirst [] = error "no items in Cart"
@@ -51,7 +48,6 @@ getFirst (c:cs) = (c,cs)
    PRE:  True
    POST: Returns sum of cart in integers, representing Price.
 -}
-
 calculatePrice :: Cart -> Price
 calculatePrice c = sum (map Item.getPrice c)
 
@@ -65,6 +61,7 @@ cartUpdate i c = cartUpdateAUX i c Cart.empty
 {- cartUpdateAUX i (c:cs) newC
    PRE:  True
    POST: calls a cart of items and if there are doublets of a product, it adds an item to an updated cart with reduced items stock.
+   VARIANT: length of (c:cs)
 -}
 cartUpdateAUX :: Item -> Cart -> Cart -> Cart
 cartUpdateAUX i [] newC     = newC
