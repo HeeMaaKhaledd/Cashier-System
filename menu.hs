@@ -2,6 +2,10 @@ import Interface
 import Data.Text.Internal
 import System.Process
 
+exit = do
+  system "clear"
+  putStrLn "You exited successfully!"
+
 main :: IO()
 main = do
     menu k ("Welcome " ++ (Interface.getUserName (Interface.getUser k)))
@@ -26,7 +30,7 @@ menu i message = do
   putStrLn "--   --                  --"
   putStrLn "--   --                  --"
   putStrLn "--   --                  --"
-  putStrLn "--   --                  --"
+  putStrLn "-- 9 -- EXIT PROGRAM     --"
   putStrLn "-- 0 -- ADMIN ONLY       --"
   putStrLn "==========================="
   putStrLn "---------------------------"
@@ -86,7 +90,8 @@ runMenu c i
 
   | c == 3 = do
     menu (buy i) ("You bought the following Cart " ++ (show (Interface.getCart i)))
-
+  |c == 9 = do
+    exit
   | c == 0 && (Interface.getUserAdmin i) = adminMenu i "Access Granted"
   | c == 0 = menu i "You dont have access to admin features!"
   | otherwise = menu i "You wrote a non existing number"
