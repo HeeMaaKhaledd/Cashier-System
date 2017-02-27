@@ -1,7 +1,7 @@
 -- improving readability of code.
 module User(User,setName,setId,getId,fillWallet,
             removeWallet,clearWallet,getWallet,
-            addSpent,removeSpent,makeAdmin,removeAdmin,newUser, getAdminStatus, getName, empty) where
+            addSpent,removeSpent,makeAdmin,removeAdmin,newUser, getAdminStatus, getName) where
 
 import Test.HUnit
 
@@ -17,10 +17,8 @@ type IsAdmin = Bool
 
    REPRESENTATION INVARIANT: Wallet & Spent can not be a negative number!
  -}
-data User = Void | User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
+data User = User Name Id Wallet Spent IsAdmin deriving (Show, Eq)
 
-empty :: User
-empty = Void
 {- newUser a b c d e
    PRE:  True
    POST: returns a new User from the variables a b c d

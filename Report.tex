@@ -62,30 +62,31 @@ The following graphical illustration is a brief summary of the main files of the
 The database administrates and stores the main functions. Through the database we can store the inventory, create users, and receive purchases or changes in stock.
 The database is functioning as an information bank in which information can be edited such that it fits the needs of the administrator, thus correlating to the reality of the business process in practice. Without the database, it is impossible to store the flow of information that is added into the system. This implies that it is an essential piece of the complete business system.
 \\
-Please read further in Branch \& Data structure specification X:X for further information
+Please read further in Branch \& Data structure specification 4.1 for further information
 \subsection{User}
 When registering business-transactions it is important for the system to determine whether the user is an administrator, employee or a customer in order to offer the right services and properties.
 The system is designed such that it offers an administrator the full access to change all variables in the system, including the users available to administer the system.
 A customer on the other hand only has access to information needed to purchase goods, eg. stock, price and products.
 \\\\
-Please read further in Branch \& Data structure specification X:X for further information
+Please read further in Branch \& Data structure specification 4.2 for further information
 \subsection{Item}
 One of the most essential parts of the business system is the Item specification. The items may be changed or modified as the stock or price changes. Further you upload one of these changes to the database in order to update price and inventory. An item holds all the information needed to specify the products values, such as the stock, EAN code, price, and name.
 \\\\
-Please read further in Branch \& Data structure specification X:X for further information
+Please read further in Branch \& Data structure specification 4.3 for further information
 \subsection{Cart}
 The cart is a temporary list of chosen products by the User.  This cart holds products in order to sum up the list of chosen products and giving the user an overview of its choices. From here it is easy to navigate in order to add more products or remove them. This way the usability of the system increases since the customer can iterate the shopping list while being able to keep on shopping.\\\\
-Please read further in Branch \& Data structure specification X:X for further information\\
+Please read further in Branch \& Data structure specification 4.4 for further information\\
+\newpage
 \subsection{Interface}
 \subsubsection{Functional Interface}
 The interface is divided in two levels of functionality. The function interface, and the graphical menu.
 Interface functions is our gathering channel from our systems flow chart. This is the channel in which the User interacts with the complete business system. By hiding all help functions in the back end systems you can easily communicate in a front-end manor to the user, simplifying the systems usability, improving the user experience. This way we enable the customer to handle the system without any further practical guidance than what is offered by the business system itself and its users guide.
 \\\\
-Please read further in Branch \& Data structure specification X:X for further information
+Please read further in Branch \& Data structure specification 4.5.1 for further information
 \subsubsection{Graphical Interface}
 The graphical interface is a visualization of the interface functions to get the complete front-end product. With a graphical interface the User is further being guided in the useage of the system. This is the final level of the product, surfacing to the interaction with the User.
 \\\\
-Please read further in Branch \& Data structure specification specification X:X for further information.
+Please read further in Branch \& Data structure specification specification 4.5.2 for further information.
 \newpage
 \section{Branch \& Data structure specification}
 \subsection{Database}
@@ -156,7 +157,7 @@ clearWallet   :: User   -> User
 \end{lstlisting}
 These data types are all related to preset functions explained in previous section.
 The data types are all enabling changes in the main data type of its kind.
-\subsection{item}
+\subsection{Item}
 Item.hs is the way we chose to represent a product of in the Cashier-System. Our Item.hs has its own data structure which is defined in the following way.
 \begin{lstlisting}
 type Name  = String
@@ -198,11 +199,12 @@ Cart.hs is imported and makes the following functions reachable.\\
 empty :: Cart
 addToCart :: Item -> Cart -> Cart
 removeFromCart :: Item -> Cart -> Cart
-removeFromCartAUX :: Item -> Cart -> Cart -> Cart
 calculatePrice :: Cart -> Int
 getFirst :: Cart -> (Item,Cart)
+cartUpdate :: Item -> Cart -> Cart
 \end{lstlisting}
 All functions specified aims to make Cart edible for Users. The names of functions are relatively self explanatory. As mentioned in previous branch and data specifications, the types put in are contained among the first arrows, whilst the last output is specified last in each function. For specified code, please read attached file.
+\newpage
 \subsection{Interface}
 \subsubsection{Functional Interface}
 The functional interface is the systems most advanced branch as it collects and handles all other branches as a root of the system.Interface.hs handles all branches and is imported and called through different functions. To make it more readable we have added headings in order to understand the different specifications. For specified code, please read attached file.
@@ -215,7 +217,7 @@ import Database
 import Test.HUnit
 \end{lstlisting}
 As mentioned, you can see that all branches are imported into the functional interface. One addition to this is our automated tests conducted through test.Hunit.
-To read more about debugging and testing, please read chapter about testing and debugging. For specified code, please read attached file.
+To read more about debugging and testing, please read chapter 7 about testing and debugging. For specified code, please read attached file.
 \begin{lstlisting}
 Data types
 
@@ -236,6 +238,11 @@ newInterface :: User -> Database User -> Database Item -> Cart -> Interface
 \end{lstlisting}
 new interface specifies what types the interface takes in the system. The system is as you can see built of the other branches, calling user, databases, cart and creates the interface. For specified code, please read attached file.
 \begin{lstlisting}
+getDatabaseItem :: Interface -> Database Item
+getDatabaseUser :: Interface -> Database User
+\end{lstlisting}
+The interface returns the databases it holds. For specified code, please read attached file.
+\begin{lstlisting}
 User administration
 getUser :: Interface -> User
 createUser :: Name -> Id -> Wallet -> Spent -> IsAdmin -> Interface -> Interface
@@ -245,19 +252,37 @@ findUser :: Id -> Interface -> User
 The user administration calls all the functions needed to handle users from the User branch. This way the interface simplifies the user administration as it is gathered and called with simple functions. For specified code, please read attached file.
 \begin{lstlisting}
 setUserName :: Name -> User -> Interface -> Interface
+getUserName :: User -> Name
 setUserId :: Id -> User -> Interface -> Interface
+getUserAdmin :: Interface -> Bool
 makeUserAdmin:: User -> Interface -> Interface
 removeUserAdmin:: User -> Interface -> Interface
 \end{lstlisting}
+\begin{lstlisting}
+Item administration
+findItem :: Ean -> Interface -> Item
+createItem :: Name -> Ean -> Price -> Stock -> Interface -> Interface
+removeItem :: Item -> Interface -> Interface
+\end{lstlisting}
+The item administration calls all the functions needed to handle items from the Item branch. This way the interface simplifies the user administration as it is gathered and called with simple functions. For specified code, please read attached file.
+\begin{lstlisting}
+setUserName :: Name -> User -> Interface -> Interface
+getUserName :: User -> Name
+setUserId :: Id -> User -> Interface -> Interface
+getUserAdmin :: Interface -> Bool
+makeUserAdmin:: User -> Interface -> Interface
+removeUserAdmin:: User -> Interface -> Interface
+\end{lstlisting}
+setItemName :: Name -> Item -> Interface -> Interface
+getItemEan :: Item -> Ean
+setItemEan :: Ean -> Item -> Interface -> Interface
+setItemPrice :: Price -> Item -> Interface -> Interface
 \begin{lstlisting}
 Wallet
 getWallet :: User -> Interface -> Wallet
 fillWallet :: Int -> User -> Interface -> Interface
 reduceWallet :: Int -> User -> Interface -> Interface
-clearWallet :: Int -> User -> Interface -> Interface
-createItem :: Name -> Ean -> Price -> Stock -> Interface -> Interface
-removeItem :: Item -> Interface -> Interface
-findItem :: Ean -> Interface -> Item
+clearWallet :: User -> Interface -> Interface
 \end{lstlisting}
 The interface calls all wallet functions that is needed to adjust or create wallet values. For specified code, please read attached file.
 \begin{lstlisting}
@@ -272,8 +297,11 @@ Cart Handling
 addToCart :: Item -> Interface -> Interface
 removeFromCart :: Item -> Interface -> Interface
 buy :: Interface -> Interface
+calculateCartPrice :: Interface -> Price
+getCart :: Interface -> Cart
 \end{lstlisting}
 The interface calls all cart functions that is needed to adjust or create temporary cart values.
+\newpage
 \subsubsection{Graphical interface}
 The graphical interface file Menu.hs withholds all information regarding the terminal actions that the user is interacting with to purchase products. This implicates that our following Users guide will mainly be concerning this file. To make a functional menu system we have had to make some additional imports to the file:
 \begin{lstlisting}
@@ -282,7 +310,7 @@ import System.Process
 \end{lstlisting}
 The functional interface file is imported in order to make its content implemented in the user interface menu. Its code is rather large but its usability is quite simple. System.Process is imported as a standard help function in order to be able to clear the terminal and increasing its usability.
 \\
-To understand the graphical interface, please read User guide and attached file.
+To understand the graphical interface, please read User guide and attached file menu.hs.
 \newpage
 \section{User guide}
 Welcome to this quick start User's Guide of the Business System Interface. Since the User can be both an Administrator and Customer, we have chose to make external guides for these different properties.
