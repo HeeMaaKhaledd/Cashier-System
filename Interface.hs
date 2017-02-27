@@ -32,7 +32,7 @@ type IsAdmin  = Bool
       User holds the current User, Database User holds every user in our database ,
       Database Item hold every item in our shop and Cart holds the current cart!
 
-   REPRESENTATION INVARIANT: User must be a user inside Database User
+   REPRESENTATION INVARIANT: User must be a User inside Database User
  -}
 data Interface = Interface User (Database User) (Database Item) Cart deriving (Show,Eq)
 
