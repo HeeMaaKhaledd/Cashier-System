@@ -39,10 +39,10 @@ data Interface = Interface User (Database User) (Database Item) Cart deriving (S
 --testing interface ..
 testInterface = newInterface a b c d
   where
-    a = (User.newUser "sebbe" 12 100 0 True)
-    b = [((User.newUser "sebbe" 12 100 0 True),12),((User.newUser "grimmi" 11 100 0 True),11)]
-    c = [((Item.createItem "cola" 193 10 10),193),((Item.createItem "cool" 192 10 10),192)]
-    d = Cart.addToCart (Item.createItem "cola" 193 10 10) Cart.empty
+    a = (User.newUser "sebbe" 12 250 150 True)
+    b = [((User.newUser "sebbe" 1 250 150 True),1),((User.newUser "grim" 2 100 1300 True),2)]
+    c = [((Item.createItem "Cola" 193 10 10),193),((Item.createItem "Fanta" 192 10 10),192)]
+    d = Cart.empty
 
 -- END OF DATASTRUCTURES
 -- Functions to grab information from our Interface datastructure!
